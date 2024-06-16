@@ -131,86 +131,10 @@ hr {
     padding-right: 5px;
     color: #bbb;
 }
-.hassets {
-    position: relative;
-}
-@media (max-width: 991px) {
-    .hassets {
-        display: none;
-    }
-}
-.hasset {
-    position: absolute;
-    margin: 0;
-    padding: 0;
-}
 .ctitle {
     font-size: 36px;
     margin-bottom: 20px;
     margin-top: 40px;
-}
-#featured-talks .row {
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
-    padding-bottom: 30px;
-}
-.card {
-    grid-column: span 3;
-    vertical-align: top;
-    background-color: #eee;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    padding: 5px;
-    background-color: white;
-    padding-bottom: 10px;
-}
-@media (max-width: 991px) {
-    .card {
-        grid-column: span 6;
-    }
-    #featured-talks .row {
-        grid-column-gap: 5px;
-        grid-row-gap: 5px;
-    }
-}
-.card img {
-    border-radius: 5px;
-    width: 100%;
-}
-.cdesc {
-    height: 30px;
-    vertical-align: top;
-    margin-bottom: 10px;
-    font-size: 15px;
-}
-@media (max-width: 768px) {
-    .cdesc {
-        font-size: 14px;
-        padding-bottom: 10px;
-    }
-}
-#pet-projects .row {
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
-}
-.project {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-}
-.pico {
-    float: left;
-    margin-right: 10px;
-}
-.pdesc {
-}
-.pend {
-    clear: both;
-}
-.pico img {
-    height: 80px;
-    border-radius: 5px;
-    border: 1px solid #999;
 }
 .pub {
     font-size: 14px;
@@ -229,20 +153,4 @@ hr {
 .pub-authors {
     display: block;
     color: #900;
-}
-.tul {
-    text-align: center;
-    padding: 0;
-}
-.til {
-    display: inline-block;
-    padding: 3px 15px 3px 15px;
-    margin-bottom: 5px;
-}
-.tilb {
-    border-right: 1px solid #ccc;
-}
-.nodot {
-    list-style-type: none;
-    padding-left: 0;
 }
