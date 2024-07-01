@@ -1,0 +1,56 @@
+@import 'main.css';
+
+.project {
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.project img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-right: 20px;
+    flex: 1 1 150px;
+}
+
+.project-details {
+    flex: 2 1 400px;
+}
+
+.project-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+}
+
+.project-info {
+    font-size: 14px;
+    color: #666;
+}
+
+.project-info div {
+    margin-bottom: 5px;
+}
+
+.project-info div span {
+    font-weight: bold;
+}
+
+.project-description {
+    margin: 15px 0;
+}
+
+.project-links a {
+    display: inline-block;
+    margin-right: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.project-links a:hover {
+    text-decoration: underline;
+}

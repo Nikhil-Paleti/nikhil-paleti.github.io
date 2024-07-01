@@ -1,0 +1,57 @@
+@import 'main.css';
+
+.pub {
+    margin-bottom: 20px;
+}
+
+.pub-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.pub-title a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.pub-title a:hover {
+    text-decoration: underline;
+}
+
+.pub-venue {
+    font-style: italic;
+    color: #666;
+}
+
+.pub-authors {
+    color: #555;
+}
+
+.google-scholar-section {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.google-scholar-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #4285F4;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.google-scholar-link:hover {
+    background-color: #3367D6;
+}
+
+.google-scholar-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}

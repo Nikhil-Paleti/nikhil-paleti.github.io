@@ -1,0 +1,116 @@
+@import 'main.css';
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+#dhead {
+    margin-top: 20px;
+}
+
+#dpic, #ddesc {
+    flex: 1;
+    padding: 20px;
+}
+
+#dpic {
+    text-align: right;
+}
+
+#ddesc {
+    text-align: left;
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: bold;
+    padding: 0;
+    margin: 0 0 10px 0;
+}
+
+h2 {
+    font-weight: normal;
+    font-style: italic;
+    color: #999;
+    font-size: 24px;
+    padding: 0;
+    margin: 0 0 20px 0;
+    max-width: 500px;
+}
+
+#dpic img {
+    width: 320px;
+    height: 320px;
+    border-radius: 160px;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#dico {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.iico {
+    width: 48px;
+    height: 48px;
+    transition: transform 0.3s ease;
+}
+
+.iico:hover {
+    transform: translateY(-3px);
+}
+
+#demail {
+    margin-top: 20px;
+    color: #555;
+    opacity: 0;
+    transition: opacity 0.7s;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+    #dpic, #ddesc {
+        text-align: center;
+    }
+    h1 {
+        font-size: 36px;
+    }
+    h2 {
+        font-size: 20px;
+        max-width: 100%;
+    }
+    #dpic img {
+        width: 240px;
+        height: 240px;
+    }
+    .iico {
+        width: 40px;
+        height: 40px;
+    }
+    #dico {
+        justify-content: center;
+    }
+}
