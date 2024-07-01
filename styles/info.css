@@ -1,0 +1,37 @@
+#dhead {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+#dpic img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+#ddesc h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+#ddesc h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: gray;
+}
+
+#dico {
+    margin: 20px 0;
+}
+
+.iico {
+    width: 30px;
+    height: 30px;
+    margin: 0 10px;
+}

@@ -1,0 +1,152 @@
+.timeline {
+    position: relative;
+    padding: 0;
+    list-style: none;
+    margin-left: 60px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -2px;
+    width: 2px;
+    height: 100%;
+    background: #cfcfcf;
+}
+
+.entry {
+    position: relative;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: flex-start;
+    text-align: left; /* Ensure text is left-aligned */
+}
+
+.entry-image {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+    margin-left: 5px;
+    position: relative;
+    z-index: 2;
+}
+
+.entry-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.entry-content {
+    flex-grow: 1;
+    padding-left: 20px;
+}
+
+.entry-dot {
+    position: absolute;
+    top: 35px;
+    left: -42px;
+    width: 16px;
+    height: 16px;
+    background: #007bff;
+    border-radius: 50%;
+    border: 3px solid white;
+    z-index: 3;
+}
+
+.entry-header {
+    margin-bottom: 10px;
+}
+
+.entry-header h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.entry-header .organization {
+    margin: 5px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.entry-meta {
+    margin: 5px 0 0 0;
+    font-size: 16px;
+    color: #666;
+    font-style: italic;
+}
+
+.entry-meta .year,
+.entry-meta .location {
+    display: inline-block;
+}
+
+.entry-meta .year::after {
+    content: " | ";
+    margin: 0 5px;
+    color: #666;
+    font-style: normal;
+}
+
+.entry-content p {
+    margin: 10px 0;
+    color: #333;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .timeline {
+        margin-left: 40px;
+    }
+    .entry-image {
+        width: 60px;
+        height: 60px;
+    }
+    .entry-dot {
+        left: -32px;
+        top: 25px;
+    }
+    .entry-header h3 {
+        font-size: 22px;
+    }
+    .entry-header .organization {
+        font-size: 18px;
+    }
+    .entry-meta {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .timeline {
+        margin-left: 30px;
+    }
+    .entry-image {
+        width: 50px;
+        height: 50px;
+        margin-right: 15px;
+    }
+    .entry-dot {
+        left: -27px;
+        top: 20px;
+        width: 12px;
+        height: 12px;
+    }
+    .entry-header h3 {
+        font-size: 20px;
+    }
+    .entry-header .organization {
+        font-size: 16px;
+    }
+    .entry-meta {
+        font-size: 13px;
+    }
+    .entry-content p {
+        font-size: 16px;
+    }
+}

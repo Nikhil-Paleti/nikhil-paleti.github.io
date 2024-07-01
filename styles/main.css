@@ -1,49 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+main {
     display: flex;
     flex-direction: column;
-    background-color: white;
-    font-family: 'Roboto', Arial, Helvetica, "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
-    font-size: 16px;
-    line-height: 1.4;
-    color: #333;
+    align-items: center;
 }
 
-.container {
-    margin: 0 auto;
-    padding: 0 15px;
-    max-width: 970px;
-}
-
-.ctitle {
-    font-size: 36px;
-    margin: 20px 0 20px 0;
+.section {
+    width: 100%;
+    padding: 60px 20px; /* Base padding */
     text-align: center;
+    background-color: #fff;
+    box-sizing: border-box; /* Ensure padding is included in width */
 }
 
-nav {
-    padding: 20px 0;
-    text-align: center;
-    background-color: #f8f9fa;
-}
-
-nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-nav a:hover {
-    color: #007bff;
+.section:nth-child(even) {
+    background-color: #f1f1f1;
 }
 
 hr {
@@ -55,9 +33,26 @@ hr {
 }
 
 footer {
-    flex-shrink: 0;
     text-align: center;
     padding: 20px 0;
     background-color: #f8f9fa;
     font-size: 16px;
+}
+
+@media (min-width: 768px) {
+    .section {
+        padding: 60px 40px; /* Increase padding for medium screens */
+    }
+    #dhead {
+        padding: 0 40px; /* Increase padding for medium screens */
+    }
+}
+
+@media (min-width: 992px) {
+    .section {
+        padding: 60px 80px; /* Increase padding for large screens */
+    }
+    #dhead {
+        padding: 0 80px; /* Increase padding for large screens */
+    }
 }
