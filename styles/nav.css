@@ -75,31 +75,33 @@ nav {
     }
 
     #menu-toggle {
-        display: block;
-        font-size: 1rem;
-        padding: 10px 20px; /* Adjusted padding for better appearance */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
         background-color: #1e1f20;
         color: white;
         border: none;
-        border-radius: 8px; /* Slightly larger radius for a more modern look */
+        border-radius: 8px;
         cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease; /* Added transition for transform */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     
     /* Hover and active states */
     #menu-toggle:hover {
-        background-color: #596674; /* Darker shade for hover state */
+        background-color: #596674;
     }
     
     #menu-toggle:active {
-        transform: scale(0.98); /* Slightly shrink on click for feedback */
+        transform: scale(0.98);
     }
     
     /* Focus state for accessibility */
     #menu-toggle:focus {
         outline: none;
-        box-shadow: 0 0 0 3px rgba(128, 131, 134, 0.5); /* Blue outline for focus state */
+        box-shadow: 0 0 0 3px rgba(128, 131, 134, 0.5);
     }    
 
     #mobile-menu {
