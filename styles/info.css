@@ -9,20 +9,20 @@
 }
 
 #dpic img {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 #ddesc h1 {
-    font-size: 2.5em;
+    font-size: 2em;
     margin: 0;
 }
 
 #ddesc h2 {
-    font-size: 1.5em;
+    font-size: 1em;
     margin: 10px 0;
     color: gray;
 }
