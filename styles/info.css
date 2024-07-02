@@ -13,6 +13,7 @@
     height: 250px;
     border-radius: 50%;
     margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 #ddesc h1 {
@@ -35,3 +36,29 @@
     height: 30px;
     margin: 0 10px;
 }
+
+.resume-button {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.resume-button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.resume-button .iico {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    filter: brightness(0) invert(1);  /* This ensures the icon is white */
+}
+

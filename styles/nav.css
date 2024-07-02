@@ -8,15 +8,18 @@ nav {
     width: 90%;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     transition: all 0.3s ease;
+}
+
+nav.scrolled {
+    box-shadow: 0 4px 6px rgba(52, 73, 94, 0.1); /* Using --background-dark with lower opacity */
 }
 
 .nav-left a {
     font-size: 1.4rem;
     font-weight: 600;
     text-decoration: none;
-    color: #333;
+    color: var(--text-primary);
     transition: color 0.3s ease;
 }
 
@@ -27,8 +30,8 @@ nav {
 
 .nav-right a {
     text-decoration: none;
-    color: #555;
-    font-weight: 300;
+    color: var(--text-secondary);
+    font-weight: 400;
     font-size: 1rem;
     position: relative;
     transition: color 0.3s ease;
@@ -41,12 +44,12 @@ nav {
     height: 2px;
     bottom: -5px;
     left: 0;
-    background-color: #007bff;
+    background-color: var(--primary-color);
     transition: width 0.3s ease;
 }
 
 .nav-right a:hover {
-    color: #007bff;
+    color: var(--primary-color);
 }
 
 .nav-right a:hover::after {
@@ -80,42 +83,39 @@ nav {
         align-items: center;
         width: 40px;
         height: 40px;
-        background-color: #1e1f20;
-        color: white;
+        background-color: var(--primary-color);
+        color: var(--text-light);
         border: none;
         border-radius: 8px;
         cursor: pointer;
         transition: background-color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(52, 73, 94, 0.1);
     }
-    
-    /* Hover and active states */
+
     #menu-toggle:hover {
-        background-color: #596674;
+        background-color: var(--secondary-color);
     }
-    
+
     #menu-toggle:active {
         transform: scale(0.98);
     }
-    
-    /* Focus state for accessibility */
+
     #menu-toggle:focus {
         outline: none;
-        box-shadow: 0 0 0 3px rgba(128, 131, 134, 0.5);
-    }    
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+    }
 
     #mobile-menu {
         display: none;
         flex-direction: column;
         gap: 15px;
-        /* margin-top: 15px; */
         position: absolute;
         top: 100%;
         left: 0;
         width: 100%;
         background-color: rgba(255, 255, 255, 0.95);
         padding: 15px 5%;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 6px rgba(52, 73, 94, 0.1);
     }
 
     #mobile-menu.open {
@@ -124,13 +124,13 @@ nav {
 
     #mobile-menu a {
         text-decoration: none;
-        color: #555;
-        font-weight: 300;
+        color: var(--text-secondary);
+        font-weight: 400;
         font-size: 1rem;
         transition: color 0.3s ease;
     }
 
     #mobile-menu a:hover {
-        color: #007bff;
+        color: var(--primary-color);
     }
 }

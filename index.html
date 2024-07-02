@@ -9,7 +9,9 @@
         <link rel="stylesheet" type="text/css" href="styles/main.css">
         <link rel="stylesheet" type="text/css" href="styles/nav.css">
         <link rel="stylesheet" type="text/css" href="styles/info.css">
+        <link rel="stylesheet" type="text/css" href="styles/about.css">
         <link rel="stylesheet" type="text/css" href="styles/timeline.css">
+        <link rel="stylesheet" type="text/css" href="styles/projects.css">
         <link rel="stylesheet" type="text/css" href="styles/publications.css">
 
         <!-- Open Graph tags -->
@@ -55,9 +57,10 @@
                 </div>
                 <div class="nav-right">
                     <a href="#about" class="nav-link">About</a>
-                    <a href="#timeline" class="nav-link">Timeline</a>
+                    <a href="#blog" class="nav-link">Blog</a>
                     <a href="#projects" class="nav-link">Projects</a>
                     <a href="#publications" class="nav-link">Publications</a>
+                    <a href="#timeline" class="nav-link">Timeline</a>
                 </div>
                 <div class="nav-mobile">
                     <!-- <button id="menu-toggle">Menu</button> -->
@@ -68,9 +71,10 @@
                     </button>
                     <div id="mobile-menu">
                         <a href="#about" class="nav-link">About</a>
-                        <a href="#timeline" class="nav-link">Timeline</a>
+                        <a href="#blog" class="nav-link">Blog</a>
                         <a href="#projects" class="nav-link">Projects</a>
                         <a href="#publications" class="nav-link">Publications</a>
+                        <a href="#timeline" class="nav-link">Timeline</a>
                     </div>
                 </div>
             </nav>
@@ -93,15 +97,187 @@
                             <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/gmail.svg" style="cursor: pointer;" class="iico" id="iemail" title="Click to reveal Nikhil's email" alt="Contact Nikhil via email" />
                         </div>
                         <div id="demail"></div>
+                        <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="resume-button">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/filetext.svg" class="iico" alt="PDF icon" />
+                            View Resume
+                        </a>
                     </div>
                 </div>
             </div>
         
             <div class="section" id="about">
                 <h2>About</h2>
-                <p>Hi, I'm Nikhil Chowdary Paleti. I'm an AI Engineer and Researcher passionate about Machine Learning, Data Science, and Large Language Models (LLMs). <br> Welcome to my portfolio!</p>
+                <p>Hi, I'm Nikhil Chowdary Paleti, an AI Engineer and Researcher with a passion for Machine Learning, Data Science, and Large Language Models (LLMs). <br> Currently pursuing my Master’s in Data Science at UC San Diego, I am dedicated to pushing the boundaries of AI innovation. <br> Welcome to my portfolio!</p>
+                
+                <h2>SKILLS</h2>
+
+                <div class="skills-section">
+                    <h3>Machine Learning & Data Science</h3>
+
+                    <h4>Tasks</h4>
+                    <div class="skills">
+                        <div class="skill-item"><span>Large Language Models:</span> PEFT finetuning, distillation, RAG, Agents</div>
+                        <div class="skill-item"><span>Computer Vision:</span> Image Generation, Image Classification, Segmentation, Object Detection</div>
+                        <div class="skill-item"><span>Data Processing:</span> Data cleaning, Feature extraction, EDA</div>
+                        <div class="skill-item"><span>Tabular ML:</span> Classification, Regression, Clustering, Dimensionality Reduction</div>
+                        <div class="skill-item"><span>Natural Language Processing:</span> Text Classification, Named Entity Recognition, Sentiment Analysis</div>
+                        <div class="skill-item"><span>Speech Processing:</span> Speech Recognition, Text-to-Speech</div>
+                        <div class="skill-item"><span>Time Series:</span> Forecasting, Analysis</div>
+                    </div>
+                
+                    <h4>Frameworks</h4>
+                    <div class="skills">
+                        <div class="skill-item"><span>Large Language Models:</span> Transformers (Hugging Face), Langchain, Langgraph, LambdaIndex, crewai</div>
+                        <div class="skill-item"><span>Model Building:</span> PyTorch, TensorFlow, Sk-learn, XGBoost</div>
+                        <div class="skill-item"><span>Computer Vision:</span> OpenCV, Ultralytics Yolo, Diffusers (Hugging Face) </div>
+                        <div class="skill-item"><span>Natural Language Processing:</span> NLTK, SpaCy</div>
+                        <div class="skill-item"><span>Data Processing:</span> NumPy, Pandas, Datasets (Hugging Face), PySpark</div>
+                        <div class="skill-item"><span>Big Data:</span> SparkML, Hadoop</div>
+                        <div class="skill-item"><span>Data Visualization:</span> Matplotlib, Seaborn, Plotly, Power BI, Tableau, Google Looker Studio</div>
+                        <div class="skill-item"><span>Reinforcement Learning:</span> Stable Baselines 3, Ray RL</div>
+                    </div>
+                    
+                </div>
+            
+                <div class="skills-section">
+                    <h3>Programming</h3>
+                    <div class="skills">
+                        <div class="skill-item"><span>Languages:</span> Python, C++, Scala</div>
+                        <div class="skill-item"><span>Database:</span> PostgreSQL, MySQL, Firebase, MongoDB</div>
+                    </div>
+                </div>
+            
+                <div class="skills-section">
+                    <h3>Development Tools</h3>
+                    <div class="skills">
+                        <div class="skill-item"><span>Version Control:</span> Git, GitHub</div>
+                        <div class="skill-item"><span>IDEs:</span> VS Code, Jupyter Notebooks, PyCharm</div>
+                        <div class="skill-item"><span>Containerization:</span> Docker</div>
+                    </div>
+                </div>
+            
+                <div class="skills-section">
+                    <h3>Cloud & Deployment</h3>
+                    <div class="skills">
+                        <div class="skill-item"><span>Platforms:</span> Google Cloud Platform, AWS (basic)</div>
+                        <div class="skill-item"><span>MLOps:</span> Weights & Bias, MLflow, Neptune</div>
+                    </div>
+                </div>
+            
+                <div class="skills-section">
+                    <h3>Other</h3>
+                    <div class="skills">
+                        <div class="skill-item"><span>IoT:</span> MQTT protocol, Raspberry Pi, Jetson Nano</div>
+                        <div class="skill-item"><span>Robotics:</span> ROS (Robot Operating System)</div>
+                        <div class="skill-item"><span>Operating Systems:</span> MacOS, Ubuntu, Windows</div>
+                    </div>
+                </div>
+
+
             </div>
+            
+            <div class="section" id="blog">
+                <h2>Blog</h2>
+                <p>Coming Soon.. 😅 </p>
+            </div>
+
+            <div class="section" id="projects">
+                <h2>Projects</h2>
+
+                <h3>Undergraduate Projects</h3>
+                <div class="project-grid">
+                    <div class="project-card" data-project-id="nn-beyond">
+                        <div class="project-preview">
+                            <img src="assets/projects/nn-beyond.png" alt="Neural Networks and Beyond">
+                            <h4>Neural Networks and Beyond</h4>
+                            <p class="project-brief">Implemented single and multi-layer neural networks from scratch in Python<br><br>SEMESTER 1</p>
+                            <p class="project-tools">Python, NumPy</p>
+                        </div>
+                        <button class="view-details-btn">View Details</button>
+                        <div class="project-details hidden">
+                            <div class="project-info">
+                                <p><strong>Team size:</strong> 2</p>
+                                <p><strong>Date:</strong> Dec 2020</p>
+                                <p><strong>Grade:</strong> O</p>
+                            </div>
+                            <p class="project-description">
+                                In this project, we delved deep into the fundamentals of neural networks:
+                                <ul>
+                                    <li>Implemented a single-layer neural network from scratch, understanding the basic building blocks of neural computation.</li>
+                                    <li>Extended the implementation to a multi-layer neural network, exploring the power of deep architectures.</li>
+                                    <li>Derived and implemented the backpropagation algorithm for both single and multi-layer networks, gaining insights into gradient-based learning.</li>
+                                    <li>Introduced the concept of implicit layers, exploring advanced neural network architectures beyond traditional explicit layers.</li>
+                                </ul>
+                                This project provided a strong foundation in neural network theory and implementation, paving the way for understanding more complex deep learning models.
+                            </p>
+                            <div class="project-links">
+                                <a href="https://slides.com/incredebleus/deck-8a55f1/fullscreen" target="_blank">Slides</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more project cards here -->
+                </div>
+                    <!-- Add more Undergraduate projects here -->
+                </div>
+    
+            </div>
+
+            <!-- Popup Modal -->
+<div id="project-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modal-project-content"></div>
+    </div>
+</div>
         
+            <div class="section" id="publications">
+                <h2>Publications</h2>
+                <div class="pub">
+                    <div class="pub-title"><a href="https://doi.org/10.1016/j.dsp.2024.104407" target="_blank">An analysis of data leakage and generalizability in MRI based classification of Parkinson's Disease using explainable 2D Convolutional Neural Networks</a></div>
+                    <div class="pub-venue">Digital Signal Processing, Volume 147, 2024</div>
+                    <div class="pub-authors">Iswarya Kannoth Veetil, Divi Eswar Chowdary, Nikhil Chowdary P., V. Sowmya, E.A. Gopalakrishnan</div>
+                </div>
+    
+                <div class="pub">
+                    <div class="pub-title"><a href="https://arxiv.org/abs/2309.09336" target="_blank">Unleashing the Power of Dynamic Mode Decomposition and Deep Learning for Rainfall Prediction in North-East India</a></div>
+                    <div class="pub-venue">International Conference on Computation of Artificial Intelligence & Machine Learning. ICCAIML 2024​. Communications in Computer and Information Science</div>
+                    <div class="pub-authors">Paleti Nikhil Chowdary, Sathvika P, Pranav U, Rohan S, Sowmya V, Gopalakrishnan E A, Dhanya M</div>
+                </div>
+    
+                <div class="pub">
+                    <div class="pub-title"><a href="https://aclanthology.org/2023.dravidianlangtech-1.5" target="_blank">Improving Reinforcement Learning Agent Training using Text based Guidance: A study using Commands in Dravidian Languages</a></div>
+                    <div class="pub-venue">Proceedings of the Third Workshop on Speech and Language Technologies for Dravidian Languages, pages 33–42, Varna, Bulgaria. INCOMA Ltd., Shoumen, Bulgaria</div>
+                    <div class="pub-authors">Nikhil Chowdary Paleti, Sai Aravind Vadlapudi, Sai Aashish Menta, Sai Akshay Menta, Vishnu Vardhan Gorantla V N S L, Janakiram Chandu, Soman K P, and Sachin Kumar S.</div>
+                </div>
+    
+                <div class="pub">
+                    <div class="pub-title"><a href="https://doi.org/10.1109/ICCCNT56998.2023.10308067" target="_blank">A Few-Shot Approach to Dysarthric Speech Intelligibility Level Classification Using Transformers</a></div>
+                    <div class="pub-venue">2023 14th International Conference on Computing Communication and Networking Technologies (ICCCNT), Delhi, India, pp. 1-6</div>
+                    <div class="pub-authors">Nikhil Chowdary P., M. S. Akshay, V. S. Aravind, M. S. Aashish, G. V. N. S. L. V. Vardhan and G. Jyothish Lal.</div>
+                </div>
+    
+                <div class="pub">
+                    <div class="pub-title"><a href="https://doi.org/10.2991/978-94-6463-314-6_27" target="_blank">Enhancing Knee Osteoarthritis severity level classification using diffusion augmented images</a></div>
+                    <div class="pub-venue">Proceedings of the International e-Conference on Advances in Computer Engineering and Communication Systems (ICACECS 2023), pp. 266-274</div>
+                    <div class="pub-authors">Nikhil Chowdary P., Gorantla V. N. S. L. Vishnu Vardhan, Menta Sai Akshay, Menta Sai Aashish, Vadlapudi Sai Aravind, Garapati Venkata Krishna Rayalu, P. Aswathy</div>
+                </div>
+    
+                <div class="pub">
+                    <div class="pub-title"><a href="https://doi.org/10.1007/978-981-99-3315-0_63" target="_blank">Face Mask Detection Using Transfer Learning and TensorRT Optimization</a></div>
+                    <div class="pub-venue">International Conference on Innovative Computing and Communications. ICICC 2023. Lecture Notes in Networks and Systems, vol 703</div>
+                    <div class="pub-authors">Nikhil Chowdary P., Pranav Unnikrishnan, Rohan Sanjeev, KSR Logesh, Neethu Mohan & K. P. Soman</div>
+                </div>
+    
+                <div class="google-scholar-section">
+                    <h2>More Publications</h2>
+                    <p>For a complete list of publications and up-to-date metrics, please visit my Google Scholar profile:</p>
+                    <a href="https://scholar.google.co.uk/citations?user=RuldEOQAAAAJ&hl=en" target="_blank" class="google-scholar-link">
+                        <img src="https://scholar.google.com/favicon.ico" alt="Google Scholar Icon" class="google-scholar-icon">
+                        View on Google Scholar
+                    </a>
+                </div>
+            </div>
+
             <div class="section" id="timeline">
                 <h2>Timeline</h2>
                 <ul class="timeline">
@@ -163,59 +339,7 @@
                     </li>
                 </ul>
             </div>
-        
-            <div class="section" id="projects">
-                <h2>Projects</h2>
-                <p> Adding Soon.. 😅</p>
-            </div>
-        
-            <div class="section" id="publications">
-                <h2>Publications</h2>
-                <div class="pub">
-                    <div class="pub-title"><a href="https://doi.org/10.1016/j.dsp.2024.104407" target="_blank">An analysis of data leakage and generalizability in MRI based classification of Parkinson's Disease using explainable 2D Convolutional Neural Networks</a></div>
-                    <div class="pub-venue">Digital Signal Processing, Volume 147, 2024</div>
-                    <div class="pub-authors">Iswarya Kannoth Veetil, Divi Eswar Chowdary, Nikhil Chowdary P., V. Sowmya, E.A. Gopalakrishnan</div>
-                </div>
-    
-                <div class="pub">
-                    <div class="pub-title"><a href="https://arxiv.org/abs/2309.09336" target="_blank">Unleashing the Power of Dynamic Mode Decomposition and Deep Learning for Rainfall Prediction in North-East India</a></div>
-                    <div class="pub-venue">International Conference on Computation of Artificial Intelligence & Machine Learning. ICCAIML 2024​. Communications in Computer and Information Science</div>
-                    <div class="pub-authors">Paleti Nikhil Chowdary, Sathvika P, Pranav U, Rohan S, Sowmya V, Gopalakrishnan E A, Dhanya M</div>
-                </div>
-    
-                <div class="pub">
-                    <div class="pub-title"><a href="https://aclanthology.org/2023.dravidianlangtech-1.5" target="_blank">Improving Reinforcement Learning Agent Training using Text based Guidance: A study using Commands in Dravidian Languages</a></div>
-                    <div class="pub-venue">Proceedings of the Third Workshop on Speech and Language Technologies for Dravidian Languages, pages 33–42, Varna, Bulgaria. INCOMA Ltd., Shoumen, Bulgaria</div>
-                    <div class="pub-authors">Nikhil Chowdary Paleti, Sai Aravind Vadlapudi, Sai Aashish Menta, Sai Akshay Menta, Vishnu Vardhan Gorantla V N S L, Janakiram Chandu, Soman K P, and Sachin Kumar S.</div>
-                </div>
-    
-                <div class="pub">
-                    <div class="pub-title"><a href="https://doi.org/10.1109/ICCCNT56998.2023.10308067" target="_blank">A Few-Shot Approach to Dysarthric Speech Intelligibility Level Classification Using Transformers</a></div>
-                    <div class="pub-venue">2023 14th International Conference on Computing Communication and Networking Technologies (ICCCNT), Delhi, India, pp. 1-6</div>
-                    <div class="pub-authors">Nikhil Chowdary P., M. S. Akshay, V. S. Aravind, M. S. Aashish, G. V. N. S. L. V. Vardhan and G. Jyothish Lal.</div>
-                </div>
-    
-                <div class="pub">
-                    <div class="pub-title"><a href="https://doi.org/10.2991/978-94-6463-314-6_27" target="_blank">Enhancing Knee Osteoarthritis severity level classification using diffusion augmented images</a></div>
-                    <div class="pub-venue">Proceedings of the International e-Conference on Advances in Computer Engineering and Communication Systems (ICACECS 2023), pp. 266-274</div>
-                    <div class="pub-authors">Nikhil Chowdary P., Gorantla V. N. S. L. Vishnu Vardhan, Menta Sai Akshay, Menta Sai Aashish, Vadlapudi Sai Aravind, Garapati Venkata Krishna Rayalu, P. Aswathy</div>
-                </div>
-    
-                <div class="pub">
-                    <div class="pub-title"><a href="https://doi.org/10.1007/978-981-99-3315-0_63" target="_blank">Face Mask Detection Using Transfer Learning and TensorRT Optimization</a></div>
-                    <div class="pub-venue">International Conference on Innovative Computing and Communications. ICICC 2023. Lecture Notes in Networks and Systems, vol 703</div>
-                    <div class="pub-authors">Nikhil Chowdary P., Pranav Unnikrishnan, Rohan Sanjeev, KSR Logesh, Neethu Mohan & K. P. Soman</div>
-                </div>
-    
-                <div class="google-scholar-section">
-                    <h2>More Publications</h2>
-                    <p>For a complete list of publications and up-to-date metrics, please visit my Google Scholar profile:</p>
-                    <a href="https://scholar.google.co.uk/citations?user=RuldEOQAAAAJ&hl=en" target="_blank" class="google-scholar-link">
-                        <img src="https://scholar.google.com/favicon.ico" alt="Google Scholar Icon" class="google-scholar-icon">
-                        View on Google Scholar
-                    </a>
-                </div>
-            </div>
+
         </main>
         
         <hr>

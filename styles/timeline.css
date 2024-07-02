@@ -12,15 +12,15 @@
     left: -2px;
     width: 2px;
     height: 100%;
-    background: #cfcfcf;
+    background: var(--secondary-color);
 }
 
 .entry {
     position: relative;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     display: flex;
     align-items: flex-start;
-    text-align: left; /* Ensure text is left-aligned */
+    text-align: left;
 }
 
 .entry-image {
@@ -31,6 +31,9 @@
     margin-left: 5px;
     position: relative;
     z-index: 2;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(52, 73, 94, 0.1);
 }
 
 .entry-image img {
@@ -42,6 +45,17 @@
 .entry-content {
     flex-grow: 1;
     padding-left: 20px;
+    /* background-color: var(--background-light); */
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(52, 73, 94, 0.1);
+    transition: all 0.3s ease;
+}
+
+.entry-content:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(52, 73, 94, 0.15);
 }
 
 .entry-dot {
@@ -50,9 +64,9 @@
     left: -42px;
     width: 16px;
     height: 16px;
-    background: #007bff;
+    background: var(--primary-color);
     border-radius: 50%;
-    border: 3px solid white;
+    border: 3px solid var(--background-light);
     z-index: 3;
 }
 
@@ -63,21 +77,21 @@
 .entry-header h3 {
     margin: 0;
     font-size: 24px;
-    font-weight: bold;
-    color: #333;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
 .entry-header .organization {
     margin: 5px 0;
     font-size: 20px;
-    font-weight: 600;
-    color: #333;
+    font-weight: 500;
+    color: var(--secondary-color);
 }
 
 .entry-meta {
     margin: 5px 0 0 0;
     font-size: 16px;
-    color: #666;
+    color: var(--text-secondary);
     font-style: italic;
 }
 
@@ -89,14 +103,15 @@
 .entry-meta .year::after {
     content: " | ";
     margin: 0 5px;
-    color: #666;
+    color: var(--text-secondary);
     font-style: normal;
 }
 
 .entry-content p {
     margin: 10px 0;
-    color: #333;
+    color: var(--text-primary);
     font-size: 18px;
+    line-height: 1.6;
 }
 
 @media (max-width: 768px) {

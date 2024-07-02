@@ -1,0 +1,78 @@
+.skills-section h3, .skills-section h4 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-align: left;
+    color: var(--text-primary);
+}
+
+.skills-section h3 {
+    font-size: 24px;
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.skills-section h4 {
+    font-size: 20px;
+    color: var(--accent-color);
+    margin-left: 15px;
+}
+
+.skills-section {
+    margin-bottom: 30px;
+}
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding-left: 20px;
+}
+
+.skill-item {
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: 400;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: var(--background-light);
+    color: var(--text-primary);
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.skill-item span {
+    margin-right: 8px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.skill-item:hover {
+    transform: translateY(-2px);
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    box-shadow: 0 7px 14px rgba(52, 152, 219, 0.2), 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.skill-item:hover span {
+    color: var(--text-light);
+}
+
+@media (max-width: 768px) {
+    .skills-section h3 {
+        font-size: 22px;
+    }
+
+    .skills-section h4 {
+        font-size: 18px;
+    }
+
+    .skill-item {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}

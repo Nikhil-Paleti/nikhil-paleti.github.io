@@ -13,6 +13,15 @@ document.getElementById('iemail').addEventListener("click", function(){
     e_is_shown = !e_is_shown;
 });
 
+window.addEventListener('scroll', function() {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 0) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
+});
+
 document.getElementById('menu-toggle').addEventListener('click', function(){
     const menu = document.getElementById('mobile-menu');
     menu.classList.toggle('open');
@@ -41,4 +50,33 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('project-modal');
+    const modalContent = document.getElementById('modal-project-content');
+    const closeBtn = document.querySelector('.close');
+    const viewDetailsBtns = document.querySelectorAll('.view-details-btn');
+
+    viewDetailsBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const projectCard = this.closest('.project-card');
+            const projectDetails = projectCard.querySelector('.project-details').innerHTML;
+            const projectTitle = projectCard.querySelector('h4').textContent;
+
+            modalContent.innerHTML = `<h3>${projectTitle}</h3>${projectDetails}`;
+            modal.style.display = 'block';
+        });
+    });
+
+    closeBtn.onclick = function() {
+        modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
 });
