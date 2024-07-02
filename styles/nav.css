@@ -1,6 +1,5 @@
 nav {
     padding: 15px 5%;
-    background-color: rgba(255, 255, 255, 0.95);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,8 +10,14 @@ nav {
     transition: all 0.3s ease;
 }
 
+nav:not(.scrolled) {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
 nav.scrolled {
-    box-shadow: 0 4px 6px rgba(52, 73, 94, 0.1); /* Using --background-dark with lower opacity */
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 6px rgba(52, 73, 94, 0.1);
 }
 
 .nav-left a {

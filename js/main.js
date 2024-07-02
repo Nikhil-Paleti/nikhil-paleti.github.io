@@ -14,11 +14,14 @@ document.getElementById('iemail').addEventListener("click", function(){
 });
 
 window.addEventListener('scroll', function() {
+    const header = document.querySelector('header');
     const nav = document.querySelector('nav');
     if (window.scrollY > 0) {
         nav.classList.add('scrolled');
+        header.classList.remove('gradient-background');
     } else {
         nav.classList.remove('scrolled');
+        header.classList.add('gradient-background');
     }
 });
 
@@ -114,5 +117,26 @@ document.addEventListener("DOMContentLoaded", function() {
             lazyImage.src = lazyImage.dataset.src;
             lazyImage.removeAttribute("data-src");
         });
+    }
+});
+
+const dhead = document.getElementById('dhead');
+const img = document.querySelector('#dpic img');
+const images = ['assets/me.jpg', 'assets/me2.png'];
+let currentIndex = 0;
+
+function switchImage() {
+    img.style.opacity = '0';
+    setTimeout(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        img.src = images[currentIndex];
+        img.style.opacity = '1';
+    }, 300);
+}
+
+dhead.addEventListener('click', function(event) {
+    // Prevent the click from triggering on child links
+    if (event.target.tagName.toLowerCase() !== 'a' && !event.target.closest('a')) {
+        switchImage();
     }
 });
