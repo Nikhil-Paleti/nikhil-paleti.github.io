@@ -71,7 +71,7 @@ body::-webkit-scrollbar-thumb:hover {
     background-color: transparent;
     box-shadow: none;
     padding-bottom: 20px; /* Add some padding at the bottom */
-    border-bottom: 2px solid var(--primary-color); /* Add a border to separate from the next section */
+    /* border-bottom: 2px solid var(--primary-color); Add a border to separate from the next section */
 }
 
 h1, h2, h3, h4, h5, h6 {
