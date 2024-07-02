@@ -45,6 +45,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .section {
+    align-items: center;
     width: 100%;
     padding: 60px 20px;
     text-align: center;
