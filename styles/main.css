@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
+
 :root {
     --primary-color: #3498db;
     --secondary-color: #2ecc71;
@@ -17,6 +18,7 @@ body {
     overflow-x: hidden;
     background-color: var(--background-light);
     color: var(--text-primary);
+    
 }
 
 main {
@@ -45,6 +47,9 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .section {
+    /* max-width: 1200px; Adjust this value as needed */
+    margin-left: auto;
+    margin-right: auto;
     align-items: center;
     width: 100%;
     padding: 60px 20px;
@@ -155,7 +160,17 @@ footer {
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 769px) and (max-width: 1024px) {
+    .section {
+        padding: 60px 60px;
+        max-width: 90%;
+    }
+    #dhead {
+        padding: 0 60px 50px;
+    }
+}
+
+@media (min-width: 1025px) {
     .section {
         padding: 60px 80px;
     }
