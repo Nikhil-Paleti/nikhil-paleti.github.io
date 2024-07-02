@@ -115,7 +115,7 @@
                 </div>
             </div>
 
-                        <!-- Popup Modal -->
+<!-- Popup Modal -->
 <div id="project-modal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -204,11 +204,94 @@
 
                 <h3>Undergraduate Projects</h3>
                 <div class="project-grid">
-                    <div class="project-card" data-project-id="nn-beyond">
+
+                    <div class="project-card">
+                        <div class="project-preview">
+                            <img src="assets/projects/RPCA.png" alt="Robust Principal Component Analysis">
+                            <h4>Principal Component Pursuit By Alternating Directions</h4>
+                            <p class="project-brief">Implemented Robust PCA using Alternating Direction Method and applied it to denoise the Yale face dataset</p>
+                            <p class="project-tools">MATLAB, Python</p>
+                        </div>
+                        <button class="view-details-btn">View Details</button>
+                        <div class="project-details hidden">
+                            <div class="project-info">
+                                <p><strong>Semester:</strong> 4</p>
+                                <p><strong>Team size:</strong> 4</p>
+                                <p><strong>Date:</strong> July 2022</p>
+                                <p><strong>Grade:</strong> A+</p>
+                            </div>
+                            <p class="project-description">
+                                In this project, we explored the limitations of traditional Principal Component Analysis (PCA) and implemented Robust Principal Component Analysis (RPCA) to overcome these limitations:
+                                <ul>
+                                    <li><strong>PCA Limitations:</strong> Demonstrated how standard PCA is not robust to outliers, affecting its performance in real-world scenarios with noisy data.</li>
+                                    <li><strong>RPCA Implementation:</strong> Implemented RPCA by framing it as an Alternating Direction Method (ADM) problem, providing a more robust approach to dimensionality reduction.</li>
+                                    <li><strong>Yale Face Dataset Application:</strong> Applied our RPCA implementation to the Yale face dataset, showcasing its effectiveness in image processing tasks.</li>
+                                    <li><strong>Noise Introduction and Denoising:</strong> Introduced various types of noise to the dataset, including:
+                                        <ul>
+                                            <li>Random patches</li>
+                                            <li>Salt and pepper noise</li>
+                                            <li>Other artificial distortions</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Comparative Analysis:</strong> Demonstrated the superior performance of RPCA in denoising these corrupted images compared to traditional PCA.</li>
+                                    <li><strong>Mathematical Foundation:</strong> Derived and implemented the mathematical foundations of RPCA and the Alternating Direction Method.</li>
+                                </ul>
+                                This project deepened our understanding of robust dimensionality reduction techniques and their practical applications in image processing and denoising. It showcased the power of RPCA in handling real-world data with outliers and corruption, providing valuable insights into advanced data analysis methods.
+                            </p>
+                            <div class="project-links">
+                                <a href="https://github.com/Nikhil-Paleti/Denoising-RPCA/blob/main/MIS.pdf" target="_blank">Slides</a>
+                                <a href="https://github.com/Nikhil-Paleti/Denoising-RPCA/blob/main/report.pdf" target="_blank">Report</a>
+                                <a href="https://github.com/Nikhil-Paleti/Denoising-RPCA" target="_blank">Code</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-preview">
+                            <img src="assets/projects/RL.png" alt="Reinforcement Learning">
+                            <h4>Reinforcement Learning</h4>
+                            <p class="project-brief">Derived and Implemented 6 RL algorithms from scratch in Python and simulated with GYM environments<br><br>SEMESTER 3</p>
+                            <p class="project-tools">Python, GYM</p>
+                        </div>
+                        <button class="view-details-btn">View Details</button>
+                        <div class="project-details hidden">
+                            <div class="project-info">
+                                <p><strong>Team size:</strong> 4</p>
+                                <p><strong>Date:</strong> Jan 2022</p>
+                                <p><strong>Grade:</strong> A+ </p>
+                            </div>
+                            <p class="project-description">
+                                In this comprehensive project, we explored and implemented a range of reinforcement learning algorithms, from classic to cutting-edge:
+                                <ul>
+                                    <li><strong>Q-learning:</strong> Implemented this foundational value-based algorithm, understanding the concept of off-policy learning and the balance between exploration and exploitation.</li>
+                                    <li><strong>SARSA (State-Action-Reward-State-Action):</strong> Developed this on-policy TD control algorithm, comparing its performance with Q-learning in various environments.</li>
+                                    <li><strong>DQN (Deep Q-Network):</strong> Extended Q-learning to deep learning, implementing experience replay and fixed Q-targets to stabilize training in complex environments.</li>
+                                    <li><strong>REINFORCE with baseline:</strong> Implemented this policy gradient method, incorporating a baseline to reduce variance and improve learning stability.</li>
+                                    <li><strong>PPO (Proximal Policy Optimization):</strong> Implemented this state-of-the-art policy optimization algorithm, known for its sample efficiency and reliability.</li>
+                                    <li><strong>DDPG (Deep Deterministic Policy Gradient):</strong> Developed this actor-critic algorithm for continuous action spaces, combining insights from DQN and deterministic policy gradients.</li>
+                                </ul>
+                                For each algorithm, we:
+                                <ul>
+                                    <li>Derived the mathematical foundations and update rules</li>
+                                    <li>Implemented the algorithm from scratch in Python</li>
+                                    <li>Tested and benchmarked performance on various OpenAI Gym environments</li>
+                                    <li>Analyzed learning curves, policy behavior, and algorithm trade-offs</li>
+                                </ul>
+                                This project deepened our understanding of RL fundamentals, policy and value-based methods, and advanced techniques in deep reinforcement learning, providing hands-on experience with algorithms at the forefront of AI research.
+                            </p>
+                            <div class="project-links">
+                                <a href="https://github.com/Nikhil-Paleti/Reinforcement_learning/blob/main/Team_05_ppt.pptx" target="_blank">Slides</a>
+                                <a href="https://github.com/Nikhil-Paleti/Reinforcement_learning/blob/main/Team_05_report.pdf" target="_blank">Report</a>
+                                <a href="https://github.com/Nikhil-Paleti/Reinforcement_learning/tree/main" target="_blank">Code</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
                         <div class="project-preview">
                             <img src="assets/projects/nn-beyond.png" alt="Neural Networks and Beyond">
                             <h4>Neural Networks and Beyond</h4>
-                            <p class="project-brief">Implemented single and multi-layer neural networks from scratch in Python<br><br>SEMESTER 1</p>
+                            <p class="project-brief">Derived Backpropogation and Implemented single and multi-layer neural networks from scratch in Python<br><br>SEMESTER 1</p>
                             <p class="project-tools">Python, NumPy</p>
                         </div>
                         <button class="view-details-btn">View Details</button>

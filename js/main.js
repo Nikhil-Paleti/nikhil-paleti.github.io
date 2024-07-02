@@ -64,8 +64,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const projectCard = this.closest('.project-card');
             const projectDetails = projectCard.querySelector('.project-details').innerHTML;
             const projectTitle = projectCard.querySelector('h4').textContent;
+            const projectImage = projectCard.querySelector('img').outerHTML;
+            const projectBrief = projectCard.querySelector('.project-brief').innerHTML;
+            const projectTools = projectCard.querySelector('.project-tools').textContent;
 
-            modalContent.innerHTML = `<h3>${projectTitle}</h3>${projectDetails}`;
+            modalContent.innerHTML = `
+                <h3>${projectTitle}</h3>
+                ${projectImage}
+                <div class="modal-brief">${projectBrief}</div>
+                <div class="modal-tools"><strong>Tools:</strong> ${projectTools}</div>
+                ${projectDetails}
+            `;
             modal.style.display = 'block';
         });
     });
