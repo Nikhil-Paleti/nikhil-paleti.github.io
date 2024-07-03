@@ -123,16 +123,8 @@
     </div>
 </div>
 
-            <div class="section" id="about">
-                <h2>About</h2>
-                <p>Hi, I'm Nikhil Chowdary Paleti, an AI Engineer and Researcher with a passion for Machine Learning, Data Science, and Large Language Models (LLMs). <br> Currently pursuing my Master’s in Data Science at UC San Diego, I am dedicated to pushing the boundaries of AI innovation. <br> Welcome to my portfolio!</p>
-                
-                <h2>SKILLS</h2>
 
-                <div class="skills-section">
-                    <h3>Machine Learning & Data Science</h3>
-
-                    <h4>Tasks</h4>
+                    <!-- <h4>Tasks</h4>
                     <div class="skills">
                         <div class="skill-item"><span>Large Language Models:</span> PEFT finetuning, distillation, RAG, Agents</div>
                         <div class="skill-item"><span>Computer Vision:</span> Image Generation, Image Classification, Segmentation, Object Detection</div>
@@ -141,56 +133,87 @@
                         <div class="skill-item"><span>Natural Language Processing:</span> Text Classification, Named Entity Recognition, Sentiment Analysis</div>
                         <div class="skill-item"><span>Speech Processing:</span> Speech Recognition, Text-to-Speech</div>
                         <div class="skill-item"><span>Time Series:</span> Forecasting, Analysis</div>
-                    </div>
+                    </div> -->
                 
-                    <h4>Frameworks</h4>
-                    <div class="skills">
-                        <div class="skill-item"><span>Large Language Models:</span> Transformers (Hugging Face), Langchain, Langgraph, LambdaIndex, crewai</div>
-                        <div class="skill-item"><span>Model Building:</span> PyTorch, TensorFlow, Sk-learn, XGBoost</div>
-                        <div class="skill-item"><span>Computer Vision:</span> OpenCV, Ultralytics Yolo, Diffusers (Hugging Face) </div>
-                        <div class="skill-item"><span>Natural Language Processing:</span> NLTK, SpaCy</div>
-                        <div class="skill-item"><span>Data Processing:</span> NumPy, Pandas, Datasets (Hugging Face), PySpark</div>
-                        <div class="skill-item"><span>Big Data:</span> SparkML, Hadoop</div>
-                        <div class="skill-item"><span>Data Visualization:</span> Matplotlib, Seaborn, Plotly, Power BI, Tableau, Google Looker Studio</div>
-                        <div class="skill-item"><span>Reinforcement Learning:</span> Stable Baselines 3, Ray RL</div>
-                    </div>
-                    
-                </div>
-            
-                <div class="skills-section">
-                    <h3>Programming</h3>
-                    <div class="skills">
-                        <div class="skill-item"><span>Languages:</span> Python, C++, Scala</div>
-                        <div class="skill-item"><span>Database:</span> PostgreSQL, MySQL, Firebase, MongoDB</div>
-                    </div>
-                </div>
-            
-                <div class="skills-section">
-                    <h3>Development Tools</h3>
-                    <div class="skills">
-                        <div class="skill-item"><span>Version Control:</span> Git, GitHub</div>
-                        <div class="skill-item"><span>IDEs:</span> VS Code, Jupyter Notebooks, PyCharm</div>
-                        <div class="skill-item"><span>Containerization:</span> Docker</div>
-                    </div>
-                </div>
-            
-                <div class="skills-section">
-                    <h3>Cloud & Deployment</h3>
-                    <div class="skills">
-                        <div class="skill-item"><span>Platforms:</span> Google Cloud Platform, AWS (basic)</div>
-                        <div class="skill-item"><span>MLOps:</span> Weights & Bias, MLflow, Neptune</div>
-                    </div>
-                </div>
-            
-                <div class="skills-section">
-                    <h3>Other</h3>
-                    <div class="skills">
-                        <div class="skill-item"><span>IoT:</span> MQTT protocol, Raspberry Pi, Jetson Nano</div>
-                        <div class="skill-item"><span>Robotics:</span> ROS (Robot Operating System)</div>
-                        <div class="skill-item"><span>Operating Systems:</span> MacOS, Ubuntu, Windows</div>
-                    </div>
-                </div>
+                    <!-- <h4>Frameworks</h4> -->
 
+
+            <div class="section" id="about">
+                <h2>About</h2>
+                <p>Hi, I'm Nikhil Chowdary Paleti, an AI Engineer and Researcher with a passion for Machine Learning, Data Science, and Large Language Models (LLMs). <br> Currently pursuing my Master’s in Data Science at UC San Diego, I am dedicated to pushing the boundaries of AI innovation. <br> Welcome to my portfolio!</p>
+                
+                <h2>SKILLS</h2>
+
+                <div class="skills-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="ml-ds">Machine Learning & Data Science</button>
+                        <button class="tab-button" data-tab="programming">Programming</button>
+                        <button class="tab-button" data-tab="dev-tools">Development Tools</button>
+                        <button class="tab-button" data-tab="cloud">Cloud & Deployment</button>
+                        <button class="tab-button" data-tab="other">Other</button>
+                    </div>
+            
+                    <div id="ml-ds" class="tab-content active">
+                        <div class="skills-section">
+                            <h3>Machine Learning & Data Science</h3>
+                            <div class="skills">
+                                <div class="skill-item"><span>Large Language Models:</span> Transformers, Langchain, Langgraph, LambdaIndex, crewAI</div>
+                                <div class="skill-item"><span>LLM APIs:</span> OpenAI API, Google AI studio API</div>
+                                <div class="skill-item"><span>Vector Databases:</span> Pinecone, Chroma</div>
+                                <div class="skill-item"><span>Machine Learning:</span> PyTorch, TensorFlow, Scikit-learn, XGBoost</div>
+                                <div class="skill-item"><span>Natural Language Processing:</span> NLTK, SpaCy</div>
+                                <div class="skill-item"><span>Computer Vision:</span> OpenCV, YOLO, Hugging Face Diffusers</div>
+                                <div class="skill-item"><span>Data Analysis:</span> NumPy, Pandas, Hugging Face Datasets, PySpark</div>
+                                <div class="skill-item"><span>Databases:</span> PostgreSQL, MySQL, MongoDB, Firebase</div>
+                                <div class="skill-item"><span>Big Data:</span> Apache Spark, Hadoop</div>
+                                <div class="skill-item"><span>Data Visualization:</span> Matplotlib, Seaborn, Plotly, Power BI, Tableau, Google Looker Studio</div>
+                                <div class="skill-item"><span>Advanced ML:</span> Reinforcement Learning (Stable Baselines 3, Ray RL)</div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div id="programming" class="tab-content">
+                        <div class="skills-section">
+                            <h3>Programming</h3>
+                            <div class="skills">
+                                <div class="skill-item"><span>Languages:</span> Python, C++, Scala</div>
+                                <div class="skill-item"><span>Database:</span> PostgreSQL, MySQL, Firebase, MongoDB</div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div id="dev-tools" class="tab-content">
+                        <div class="skills-section">
+                            <h3>Development Tools</h3>
+                            <div class="skills">
+                                <div class="skill-item"><span>Version Control:</span> Git, GitHub</div>
+                                <div class="skill-item"><span>IDEs:</span> VS Code, Jupyter Notebooks, PyCharm</div>
+                                <div class="skill-item"><span>Containerization:</span> Docker</div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div id="cloud" class="tab-content">
+                        <div class="skills-section">
+                            <h3>Cloud & Deployment</h3>
+                            <div class="skills">
+                                <div class="skill-item"><span>Platforms:</span> Google Cloud Platform, AWS (basic)</div>
+                                <div class="skill-item"><span>MLOps:</span> Weights & Bias, MLflow, Neptune</div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div id="other" class="tab-content">
+                        <div class="skills-section">
+                            <h3>Other</h3>
+                            <div class="skills">
+                                <div class="skill-item"><span>IoT:</span> MQTT protocol, Raspberry Pi, Jetson Nano</div>
+                                <div class="skill-item"><span>Robotics:</span> ROS (Robot Operating System)</div>
+                                <div class="skill-item"><span>Operating Systems:</span> MacOS, Ubuntu, Windows</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
             
