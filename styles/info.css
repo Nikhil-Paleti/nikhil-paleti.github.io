@@ -25,13 +25,15 @@
 
 #dhead {
     width: 100%;
-    height: 100vh;
+    /* height: 100vh; */
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #f8f9fa;
     text-align: center;
     box-sizing: border-box;
+    padding: 80px 20px; 
 }
 
 #dpic img {
