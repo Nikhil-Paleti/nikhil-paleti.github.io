@@ -1,3 +1,12 @@
+@keyframes subtleGoldFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
 nav {
     padding: 15px 5%;
     display: flex;
@@ -26,6 +35,22 @@ nav.scrolled {
     text-decoration: none;
     color: var(--text-primary);
     transition: color 0.3s ease;
+}
+
+.nav-left a:hover {
+    color: transparent;
+    background: linear-gradient(90deg, 
+        #c0392b, /* Darker red */
+        #e74c3c, /* Accent red */
+        #f39c12, /* Orange */
+        #e74c3c, /* Accent red */
+        #c0392b  /* Darker red */
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: warmLiquidFlow 4s linear infinite;
+    text-shadow: 0 0 2px rgba(231, 76, 60, 0.3);
 }
 
 .nav-right {
