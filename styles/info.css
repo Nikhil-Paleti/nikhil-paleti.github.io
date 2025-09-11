@@ -25,7 +25,6 @@
 
 #dhead {
     width: 100%;
-    /* height: 100vh; */
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -36,47 +35,89 @@
     padding: 80px 20px; 
 }
 
-#dpic img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: opacity 0.05s ease-in-out;
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
 }
 
-#ddesc h1 {
-    font-size: 2em;
-    margin: 0;
+.hero-content h1 {
+    font-size: 3.5em;
+    margin: 0 0 20px 0;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
 }
 
-#ddesc h2 {
-    font-size: 1em;
-    margin: 10px 0;
-    color: gray;
+.hero-content h2 {
+    font-size: 1.4em;
+    margin: 0 0 30px 0;
+    color: var(--text-secondary);
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.hero-description {
+    font-size: 1.1em;
+    color: var(--text-primary);
+    margin: 0 0 40px 0;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #dico {
-    margin: 20px 0;
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
-#dico a, #dico img {
+#dico a {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+#dico img {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
 }
 
 .iico {
-    width: 30px;
-    height: 30px;
-    margin: 0 10px;
+    width: 24px;
+    height: 24px;
     transition: transform 0.3s ease;
 }
 
-.iico:hover {
-    transform: translateY(-2px);
+#dico a:hover {
+    transform: translateY(-3px);
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-#dico a::after, #dico img::after {
+#dico a:hover .iico {
+    transform: scale(1.1);
+}
+
+#dico a::after {
     content: attr(aria-label);
     position: absolute;
     bottom: 120%;
@@ -92,38 +133,112 @@
     visibility: hidden;
     transition: opacity 0.3s, visibility 0.3s;
     pointer-events: none;
+    z-index: 1000;
 }
 
-#dico a:hover::after, #dico img:hover::after {
+#dico a:hover::after {
     opacity: 1;
     visibility: visible;
 }
 
-#dico img#iemail::after {
+#dico a#iemail::after {
     content: attr(title);
 }
 
 .resume-button {
     display: inline-flex;
     align-items: center;
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: var(--text-light);
-    padding: 10px 20px;
-    border-radius: 25px;
+    padding: 15px 30px;
+    border-radius: 50px;
     text-decoration: none;
     font-weight: 600;
-    margin-top: 20px;
+    margin-top: 30px;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    border: none;
+    font-size: 1.1em;
 }
 
 .resume-button:hover {
-    background-color: var(--secondary-color);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
 }
 
 .resume-button .iico {
     width: 20px;
     height: 20px;
-    margin-right: 10px;
-    /* filter: brightness(0) invert(1);  This ensures the icon is white */
+    margin-right: 12px;
+    filter: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 20px 15px;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.2em;
+        margin-bottom: 25px;
+    }
+    
+    .hero-description {
+        font-size: 1em;
+        margin-bottom: 30px;
+    }
+    
+    #dico {
+        gap: 15px;
+        margin: 30px 0;
+    }
+    
+    #dico a {
+        padding: 10px;
+    }
+    
+    .iico {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .resume-button {
+        padding: 12px 25px;
+        font-size: 1em;
+        margin-top: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2em;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.1em;
+    }
+    
+    .hero-description {
+        font-size: 0.95em;
+    }
+    
+    #dico {
+        gap: 12px;
+    }
+    
+    #dico a {
+        padding: 8px;
+    }
+    
+    .iico {
+        width: 18px;
+        height: 18px;
+    }
 }
