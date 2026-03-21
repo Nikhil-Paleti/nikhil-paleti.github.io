@@ -19,11 +19,38 @@ function formatAuthors(authors: string) {
     };
   });
 }
+
+const publicationsJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Publications",
+    url: `${Astro.site ?? site.url}/publications/`,
+    description: "Selected publications and links to a fuller Google Scholar profile."
+  },
+  ...publications.map((publication) => ({
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    headline: publication.data.title,
+    name: publication.data.title,
+    url: publication.data.href,
+    datePublished: `${publication.data.year}-01-01`,
+    isPartOf: {
+      "@type": "Periodical",
+      name: publication.data.venue
+    },
+    author: formatAuthors(publication.data.authors).map((author) => ({
+      "@type": "Person",
+      name: author.label
+    }))
+  }))
+];
 ---
 
 <BaseLayout
   title="Publications"
   description="Selected publications and links to a fuller Google Scholar profile."
+  jsonLd={publicationsJsonLd}
 >
   <section class="shell page-shell">
     <h1>Publications</h1>

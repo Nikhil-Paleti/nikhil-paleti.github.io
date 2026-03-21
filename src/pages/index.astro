@@ -1,9 +1,30 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { home, site, updates } from "../data/site";
+
+const homeJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.author,
+  url: site.url,
+  jobTitle: site.role,
+  description: home.intro,
+  email: site.email,
+  homeLocation: {
+    "@type": "Place",
+    name: site.location
+  },
+  sameAs: [
+    site.social.github,
+    site.social.linkedin,
+    site.social.scholar,
+    site.social.x,
+    site.social.medium
+  ]
+};
 ---
 
-<BaseLayout title="Home" description={site.description}>
+<BaseLayout title="Home" description={site.description} jsonLd={homeJsonLd}>
   <section class="shell home-hero">
     <div class="hero-copy hero-copy-minimal">
       <h1>{site.author}</h1>

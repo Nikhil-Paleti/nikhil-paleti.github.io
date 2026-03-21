@@ -5,11 +5,30 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
+
+const blogJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Blog",
+  url: `${Astro.site ?? "https://nikhil-paleti.github.io"}/blog/`,
+  description:
+    "Long-form writing about machine learning systems, optimization, and implementation details.",
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: posts.map((post, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `${Astro.site ?? "https://nikhil-paleti.github.io"}/blog/${post.slug}/`,
+      name: post.data.title
+    }))
+  }
+};
 ---
 
 <BaseLayout
   title="Blog"
   description="Long-form writing about machine learning systems, optimization, and implementation details."
+  jsonLd={blogJsonLd}
 >
   <section class="shell page-shell">
     <h1>Blog</h1>

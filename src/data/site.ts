@@ -7,6 +7,10 @@ export const site = {
   role: "ML systems engineer and researcher",
   location: "Sunnyvale, California",
   email: "npaleti@ucsd.edu",
+  ogImage: "/og-card.svg",
+  ogImageAlt:
+    "Nikhil Paleti personal website card with an N monogram and machine learning systems and GPU performance subtitle.",
+  twitterHandle: "@nikhil2362",
   social: {
     github: "https://github.com/Nikhil-Paleti",
     linkedin: "https://www.linkedin.com/in/nikhil-paleti/",

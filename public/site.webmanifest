@@ -1,0 +1,15 @@
+{
+  "name": "Nikhil Paleti",
+  "short_name": "Nikhil",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f171c",
+  "theme_color": "#0f171c",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
