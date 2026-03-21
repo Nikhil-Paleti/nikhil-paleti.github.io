@@ -39,9 +39,21 @@ const imageUrl = new URL(image, site.url).toString();
 
     <script is:inline>
       (() => {
-        const storedTheme = localStorage.getItem("theme-preference");
-        if (storedTheme === "light" || storedTheme === "dark") {
-          document.documentElement.dataset.theme = storedTheme;
+        const legacyKey = "theme-preference";
+        const storageKey = "theme-override";
+        localStorage.removeItem(legacyKey);
+
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        const systemTheme = mediaQuery.matches ? "dark" : "light";
+        const storedOverride = localStorage.getItem(storageKey);
+
+        if (storedOverride === "light" || storedOverride === "dark") {
+          if (storedOverride === systemTheme) {
+            localStorage.removeItem(storageKey);
+            document.documentElement.removeAttribute("data-theme");
+          } else {
+            document.documentElement.dataset.theme = storedOverride;
+          }
         }
       })();
     </script>
@@ -81,27 +93,54 @@ const imageUrl = new URL(image, site.url).toString();
 
     <script is:inline>
       (() => {
-        const storageKey = "theme-preference";
+        const legacyKey = "theme-preference";
+        const storageKey = "theme-override";
         const root = document.documentElement;
         const toggle = document.querySelector("[data-theme-toggle]");
         const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
         const themeIcon = document.querySelector("[data-theme-icon]");
 
-        const getResolvedTheme = () => {
-          if (root.dataset.theme === "light" || root.dataset.theme === "dark") {
-            return root.dataset.theme;
-          }
+        localStorage.removeItem(legacyKey);
 
-          return mediaQuery.matches ? "dark" : "light";
+        const getSystemTheme = () => (mediaQuery.matches ? "dark" : "light");
+
+        const getStoredOverride = () => {
+          const value = localStorage.getItem(storageKey);
+          return value === "light" || value === "dark" ? value : null;
+        };
+
+        const applyThemePreference = () => {
+          const systemTheme = getSystemTheme();
+          const override = getStoredOverride();
+
+          if (override && override !== systemTheme) {
+            root.dataset.theme = override;
+          } else {
+            root.removeAttribute("data-theme");
+            if (override === systemTheme) {
+              localStorage.removeItem(storageKey);
+            }
+          }
+        };
+
+        const getResolvedTheme = () => {
+          const override = getStoredOverride();
+          return override ?? getSystemTheme();
         };
 
         const updateThemeUI = () => {
           const resolvedTheme = getResolvedTheme();
+          const hasOverride = Boolean(getStoredOverride());
 
           toggle?.setAttribute(
             "aria-label",
-            resolvedTheme === "dark" ? "Switch to light theme" : "Switch to dark theme"
+            hasOverride
+              ? "Use system theme"
+              : resolvedTheme === "dark"
+                ? "Switch to light theme"
+                : "Switch to dark theme"
           );
+          toggle?.setAttribute("aria-pressed", hasOverride ? "true" : "false");
 
           if (themeIcon) {
             themeIcon.innerHTML =
@@ -111,18 +150,32 @@ const imageUrl = new URL(image, site.url).toString();
           }
         };
 
-        const setTheme = (value) => {
-          root.dataset.theme = value;
+        const setThemeOverride = (value) => {
           localStorage.setItem(storageKey, value);
+          applyThemePreference();
           updateThemeUI();
         };
 
         toggle?.addEventListener("click", () => {
-          const nextTheme = getResolvedTheme() === "dark" ? "light" : "dark";
-          setTheme(nextTheme);
+          const override = getStoredOverride();
+
+          if (override) {
+            localStorage.removeItem(storageKey);
+            applyThemePreference();
+            updateThemeUI();
+            return;
+          }
+
+          const nextTheme = getSystemTheme() === "dark" ? "light" : "dark";
+          setThemeOverride(nextTheme);
         });
 
-        mediaQuery.addEventListener("change", updateThemeUI);
+        mediaQuery.addEventListener("change", () => {
+          applyThemePreference();
+          updateThemeUI();
+        });
+
+        applyThemePreference();
         updateThemeUI();
       })();
 
