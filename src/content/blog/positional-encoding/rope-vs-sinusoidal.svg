@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" fill="none">
+  <rect width="1200" height="650" rx="28" fill="#FBF8F2"/>
+  <rect x="60" y="72" width="500" height="506" rx="24" fill="#FFFDF9" stroke="#DCCFB8"/>
+  <rect x="640" y="72" width="500" height="506" rx="24" fill="#FFFDF9" stroke="#DCCFB8"/>
+  <text x="100" y="126" font-family="Georgia, serif" font-size="32" fill="#3A3025">Sinusoidal coordinates</text>
+  <text x="680" y="126" font-family="Georgia, serif" font-size="32" fill="#3A3025">RoPE rotation view</text>
+  <line x1="100" y1="500" x2="510" y2="500" stroke="#786B58" stroke-width="2"/>
+  <line x1="100" y1="180" x2="100" y2="500" stroke="#786B58" stroke-width="2"/>
+  <path d="M110 450C160 320 220 280 280 360C340 440 390 460 470 250" stroke="#94663B" stroke-width="8" stroke-linecap="round"/>
+  <path d="M110 390C170 420 220 360 280 250C340 140 390 200 470 380" stroke="#D59A54" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="820" cy="340" r="150" stroke="#786B58" stroke-width="2"/>
+  <line x1="820" y1="340" x2="930" y2="245" stroke="#94663B" stroke-width="8" stroke-linecap="round"/>
+  <line x1="820" y1="340" x2="880" y2="470" stroke="#D59A54" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="930" cy="245" r="11" fill="#94663B"/>
+  <circle cx="880" cy="470" r="11" fill="#D59A54"/>
+  <path d="M915 333C920 310 940 290 966 283" stroke="#786B58" stroke-width="3" stroke-linecap="round"/>
+  <text x="965" y="274" font-family="Arial, sans-serif" font-size="24" fill="#6D5A42">pos + k</text>
+  <text x="890" y="240" font-family="Arial, sans-serif" font-size="24" fill="#6D5A42">q</text>
+  <text x="885" y="505" font-family="Arial, sans-serif" font-size="24" fill="#6D5A42">k</text>
+  <text x="102" y="540" font-family="Arial, sans-serif" font-size="22" fill="#6D5A42">position</text>
+  <text x="36" y="190" font-family="Arial, sans-serif" font-size="22" fill="#6D5A42" transform="rotate(-90 36 190)">dimension value</text>
+  <text x="100" y="594" font-family="Arial, sans-serif" font-size="22" fill="#6D5A42">Absolute coordinates spread information across frequencies.</text>
+  <text x="680" y="594" font-family="Arial, sans-serif" font-size="22" fill="#6D5A42">Relative offsets become rotations in paired dimensions.</text>
+</svg>

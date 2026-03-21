@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" fill="none">
+  <rect width="1200" height="600" rx="28" fill="#FBF8F2"/>
+  <text x="82" y="96" font-family="Georgia, serif" font-size="34" fill="#3A3025">Frequency bands across embedding pairs</text>
+  <g transform="translate(90 150)">
+    <rect width="1020" height="330" rx="24" fill="#FFFDF9" stroke="#DCCFB8"/>
+    <g>
+      <rect x="32" y="34" width="956" height="42" rx="14" fill="#E6D7C1"/>
+      <rect x="32" y="96" width="860" height="42" rx="14" fill="#EFD4AF"/>
+      <rect x="32" y="158" width="710" height="42" rx="14" fill="#F1C58B"/>
+      <rect x="32" y="220" width="470" height="42" rx="14" fill="#E6AE61"/>
+    </g>
+    <text x="58" y="61" font-family="Arial, sans-serif" font-size="22" fill="#5D4C39">Low-frequency pairs: encode coarse position trends</text>
+    <text x="58" y="123" font-family="Arial, sans-serif" font-size="22" fill="#5D4C39">Mid-frequency pairs: mix local and global position cues</text>
+    <text x="58" y="185" font-family="Arial, sans-serif" font-size="22" fill="#5D4C39">Higher-frequency pairs: sharpen local ordering</text>
+    <text x="58" y="247" font-family="Arial, sans-serif" font-size="22" fill="#5D4C39">Fastest pairs: react to short-range token shifts</text>
+  </g>
+  <text x="82" y="544" font-family="Arial, sans-serif" font-size="22" fill="#6D5A42">A single positional scheme acts like a stack of clocks running at different speeds.</text>
+</svg>

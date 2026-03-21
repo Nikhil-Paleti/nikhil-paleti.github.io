@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Nikhil Paleti site card">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f171c" />
+      <stop offset="100%" stop-color="#18242c" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect x="84" y="84" width="1032" height="462" rx="30" fill="none" stroke="#74b6cf" stroke-opacity="0.32" />
+  <path
+    d="M148 450V176h58l123 194V176h44v274h-56L190 257.5V450Z"
+    fill="#f4efe6"
+  />
+  <text
+    x="430"
+    y="286"
+    fill="#f4efe6"
+    font-size="76"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-weight="700"
+  >
+    Nikhil Paleti
+  </text>
+  <text
+    x="430"
+    y="356"
+    fill="#9eb0ba"
+    font-size="34"
+    font-family="'SFMono-Regular', Consolas, 'Liberation Mono', monospace"
+    letter-spacing="3"
+  >
+    MACHINE LEARNING SYSTEMS • GPU PERFORMANCE
+  </text>
+</svg>

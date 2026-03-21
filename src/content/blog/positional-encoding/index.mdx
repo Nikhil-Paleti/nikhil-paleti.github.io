@@ -1,0 +1,154 @@
+---
+title: Positional Encoding Explained
+description: A rebuilt and expanded version of my transformer positional encoding essay, now with cleaner math, figures, and implementation notes.
+date: 2024-07-05
+tags:
+  - transformers
+  - llms
+  - math
+  - optimization
+draft: false
+featured: true
+archiveUrl: https://medium.com/thedeephub/positional-encoding-explained-a-deep-dive-into-transformer-pe-65cfe8cfe10b
+---
+
+import Figure from "../../../components/Figure.astro";
+import FigureGrid from "../../../components/FigureGrid.astro";
+import ropeFigure from "./rope-vs-sinusoidal.svg";
+import bandsFigure from "./attention-bands.svg";
+
+## Why positional information matters
+
+Self-attention is permutation-invariant. If we feed the same token embeddings in a
+different order, plain attention has no native sense of which token came first.
+That is why transformers inject positional structure before attention layers begin
+to mix information.
+
+The core requirement is simple: a token at position \(p\) should carry enough
+signal for the model to distinguish it from a token at position \(q\), while still
+making relative offsets useful during dot-product attention.
+
+## Sinusoidal encoding as a basis of clocks
+
+The original transformer uses paired sine and cosine waves:
+
+$$
+\text{PE}(p, 2i) = \sin\left(\frac{p}{10000^{2i/d}}\right), \qquad
+\text{PE}(p, 2i + 1) = \cos\left(\frac{p}{10000^{2i/d}}\right)
+$$
+
+Each pair of dimensions behaves like a clock with a different angular frequency.
+High-frequency pairs change rapidly and capture local ordering; low-frequency pairs
+change slowly and carry global position trends.
+
+<Figure
+  src={ropeFigure.src}
+  alt="Comparison between sinusoidal coordinates and rotary position encoding viewed as rotations."
+  caption="Two ways to think about positional encodings: absolute sinusoidal coordinates on the left, relative rotation in paired dimensions on the right."
+  wide={true}
+/>
+
+An intuitive way to read the formula is:
+
+| Component | Role |
+| --- | --- |
+| \(p\) | token position in the sequence |
+| \(i\) | frequency band index |
+| \(d\) | embedding dimension |
+| `10000^(2i/d)` | sets the timescale of that band |
+
+Because the bands evolve at different speeds, the full positional vector lets the
+model recover order without assigning every dimension the same job.
+
+## Why relative offsets fall out naturally
+
+For a fixed offset \(k\), the sinusoidal vector at position \(p + k\) is a linear
+transformation of the vector at position \(p\). That gives attention layers a
+useful inductive bias: relative displacement is not an entirely new concept the
+network must rediscover from scratch.
+
+In paired dimensions, a shift by \(k\) behaves like a small rotation:
+
+$$
+\begin{bmatrix}
+\sin(\theta + \phi) \\
+\cos(\theta + \phi)
+\end{bmatrix}
+=
+\begin{bmatrix}
+\cos \phi & \sin \phi \\
+-\sin \phi & \cos \phi
+\end{bmatrix}
+\begin{bmatrix}
+\sin \theta \\
+\cos \theta
+\end{bmatrix}
+$$
+
+This is the bridge to rotary position embeddings. Instead of adding a positional
+vector to the token embedding, RoPE rotates paired coordinates of queries and keys
+so that relative offsets show up directly inside the attention score.
+
+## RoPE and attention geometry
+
+RoPE applies a position-dependent rotation matrix \(R_p\) to paired dimensions of
+queries and keys:
+
+$$
+q'_p = R_p q_p, \qquad k'_t = R_t k_t
+$$
+
+Then the attention score becomes:
+
+$$
+\langle q'_p, k'_t \rangle
+=
+\langle R_p q_p, R_t k_t \rangle
+=
+\langle q_p, R_{t-p} k_t \rangle
+$$
+
+That last line is the important one. The score now depends on the relative offset
+\(t - p\), not just on two unrelated absolute positions. This is a clean reason
+why RoPE tends to work well for modern LLMs.
+
+<FigureGrid
+  items={[
+    {
+      src: ropeFigure.src,
+      alt: "A geometric view of RoPE rotations.",
+      caption: "Relative offset as a rotation."
+    },
+    {
+      src: bandsFigure.src,
+      alt: "Frequency bands across embedding pairs.",
+      caption: "Different dimension pairs specialize at different timescales."
+    }
+  ]}
+/>
+
+## Minimal implementation sketch
+
+```python
+import torch
+
+def apply_rope(x, cos, sin):
+    x_even = x[..., ::2]
+    x_odd = x[..., 1::2]
+    rotated_even = x_even * cos - x_odd * sin
+    rotated_odd = x_even * sin + x_odd * cos
+    out = torch.empty_like(x)
+    out[..., ::2] = rotated_even
+    out[..., 1::2] = rotated_odd
+    return out
+```
+
+The implementation is small, but the choice of cached frequencies, extrapolation
+behavior, and numeric precision can materially affect long-context performance.
+
+## Practical takeaway
+
+Sinusoidal encoding gives a strong mathematical baseline. RoPE keeps the same
+paired-dimension intuition while aligning even more directly with what attention
+actually computes. For long-form technical writing and modern LLM discussion, that
+geometric story is often the most useful mental model to carry around.

@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { home, site, updates } from "../data/site";
+---
+
+<BaseLayout title="Home" description={site.description}>
+  <section class="shell home-hero">
+    <div class="hero-copy hero-copy-minimal">
+      <h1>{site.author}</h1>
+      <p class="lede">{home.intro}</p>
+    </div>
+  </section>
+
+  <section class="shell home-section home-about-section">
+    <div class="home-note-grid">
+      {home.details.map((item) => (
+        <section class="home-note">
+          <p class="home-note-label">{item.label}</p>
+          <p>{item.body}</p>
+        </section>
+      ))}
+    </div>
+  </section>
+
+  <section class="shell home-section split-section">
+    <div class="section-heading">
+      <p class="section-label">Latest news / updates</p>
+    </div>
+    <div class="stack-list">
+      {updates.map((item) => (
+        <article class="update-entry">
+          <div class="update-date-column">
+            <p class="entry-date">{item.date}</p>
+          </div>
+          <div class="update-body">
+            <h2>{item.title}</h2>
+            <p>{item.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

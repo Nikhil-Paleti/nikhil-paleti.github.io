@@ -1,0 +1,47 @@
+---
+import { getCollection } from "astro:content";
+import PostLayout from "../../layouts/PostLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await post.render();
+const heroImage = post.data.heroImage?.src;
+---
+
+{
+  post.data.archiveUrl ? (
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="refresh" content={`0;url=${post.data.archiveUrl}`} />
+        <title>Redirecting…</title>
+        <link rel="canonical" href={post.data.archiveUrl} />
+      </head>
+      <body>
+        <p>
+          Redirecting to
+          <a href={post.data.archiveUrl}> the external article</a>.
+        </p>
+        <script is:inline>{`window.location.replace(${JSON.stringify(post.data.archiveUrl)});`}</script>
+      </body>
+    </html>
+  ) : (
+    <PostLayout
+      title={post.data.title}
+      description={post.data.description}
+      date={post.data.date}
+      tags={post.data.tags}
+      headings={headings}
+      heroImage={heroImage}
+    >
+      <Content />
+    </PostLayout>
+  )
+}

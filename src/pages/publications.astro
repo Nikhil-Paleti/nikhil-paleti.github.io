@@ -1,0 +1,62 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+
+const publications = (await getCollection("publications")).sort(
+  (a, b) => b.data.year - a.data.year
+);
+
+const selfNamePattern =
+  /(Nikhil Chowdary Paleti|Nikhil Chowdary P\.|Paleti Nikhil Chowdary)/i;
+
+function formatAuthors(authors: string) {
+  return authors.split(",").map((author) => {
+    const label = author.trim();
+    return {
+      label,
+      isSelf: selfNamePattern.test(label)
+    };
+  });
+}
+---
+
+<BaseLayout
+  title="Publications"
+  description="Selected publications and links to a fuller Google Scholar profile."
+>
+  <section class="shell page-shell">
+    <h1>Publications</h1>
+    <p class="lede compact-width">
+      A selected set of papers across speech, vision, reinforcement learning, and
+      applied machine learning. For the full list, see
+      <a href={site.social.scholar}> Google Scholar</a>.
+    </p>
+
+    <div class="stack-list">
+      {publications.map((publication) => (
+        <article class="publication-entry">
+          <div class="project-header">
+            <div>
+              <h2>
+                <a href={publication.data.href}>{publication.data.title}</a>
+              </h2>
+              <p class="publication-venue">{publication.data.venue}</p>
+              <p class="authors">
+                {formatAuthors(publication.data.authors).map((author, index, array) => (
+                  <>
+                    <span class:list={["author-name", author.isSelf && "is-self"]}>
+                      {author.label}
+                    </span>
+                    {index < array.length - 1 && <span class="author-separator">, </span>}
+                  </>
+                ))}
+              </p>
+            </div>
+            <span class="publication-year">{publication.data.year}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

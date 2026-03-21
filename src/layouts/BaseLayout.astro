@@ -1,0 +1,194 @@
+---
+import Sidebar from "../components/Sidebar.astro";
+import { site } from "../data/site";
+import "../styles/global.css";
+import "katex/dist/katex.min.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description = site.description, image = "/og-card.svg" } = Astro.props;
+const pageTitle = title ? `${title} | ${site.title}` : site.title;
+const canonical = new URL(Astro.url.pathname, site.url).toString();
+const imageUrl = new URL(image, site.url).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <script is:inline>
+      (() => {
+        const storedTheme = localStorage.getItem("theme-preference");
+        if (storedTheme === "light" || storedTheme === "dark") {
+          document.documentElement.dataset.theme = storedTheme;
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <Sidebar currentPath={Astro.url.pathname} />
+
+      <div class="mobile-bar">
+        <button
+          type="button"
+          class="mobile-menu-button"
+          data-sidebar-toggle
+          aria-label="Open navigation"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <a class="mobile-wordmark" href="/">{site.title}</a>
+      </div>
+
+      <button
+        type="button"
+        class="sidebar-overlay"
+        data-sidebar-overlay
+        aria-label="Close navigation"
+      ></button>
+
+      <div class="content-shell">
+        <main class="page-main">
+          <slot />
+        </main>
+      </div>
+    </div>
+
+    <script is:inline>
+      (() => {
+        const storageKey = "theme-preference";
+        const root = document.documentElement;
+        const toggle = document.querySelector("[data-theme-toggle]");
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        const themeIcon = document.querySelector("[data-theme-icon]");
+
+        const getResolvedTheme = () => {
+          if (root.dataset.theme === "light" || root.dataset.theme === "dark") {
+            return root.dataset.theme;
+          }
+
+          return mediaQuery.matches ? "dark" : "light";
+        };
+
+        const updateThemeUI = () => {
+          const resolvedTheme = getResolvedTheme();
+
+          toggle?.setAttribute(
+            "aria-label",
+            resolvedTheme === "dark" ? "Switch to light theme" : "Switch to dark theme"
+          );
+
+          if (themeIcon) {
+            themeIcon.innerHTML =
+              resolvedTheme === "dark"
+                ? '<path fill="currentColor" d="M21 12.8A8.99 8.99 0 0 1 11.2 3a.75.75 0 0 0-.83.97 7.51 7.51 0 1 1-6.4 9.6.75.75 0 0 0-.97-.83A9 9 0 1 0 21 12.8Z"/>'
+                : '<path fill="currentColor" d="M12 17.25A5.25 5.25 0 1 0 12 6.75a5.25 5.25 0 0 0 0 10.5ZM12 1.5a.75.75 0 0 1 .75.75v2.1a.75.75 0 0 1-1.5 0v-2.1A.75.75 0 0 1 12 1.5Zm0 17.55a.75.75 0 0 1 .75.75v2.1a.75.75 0 0 1-1.5 0v-2.1a.75.75 0 0 1 .75-.75ZM4.35 11.25a.75.75 0 0 1 0 1.5h-2.1a.75.75 0 0 1 0-1.5h2.1Zm17.4 0a.75.75 0 0 1 0 1.5h-2.1a.75.75 0 0 1 0-1.5h2.1ZM6.36 5.3a.75.75 0 0 1 1.06 0l1.48 1.48a.75.75 0 1 1-1.06 1.06L6.36 6.36a.75.75 0 0 1 0-1.06Zm9.74 9.74a.75.75 0 0 1 1.06 0l1.48 1.48a.75.75 0 0 1-1.06 1.06l-1.48-1.48a.75.75 0 0 1 0-1.06ZM18.7 5.3a.75.75 0 0 1 0 1.06l-1.48 1.48a.75.75 0 1 1-1.06-1.06l1.48-1.48a.75.75 0 0 1 1.06 0ZM8.9 15.04a.75.75 0 0 1 0 1.06l-1.48 1.48a.75.75 0 0 1-1.06-1.06l1.48-1.48a.75.75 0 0 1 1.06 0Z"/>';
+          }
+        };
+
+        const setTheme = (value) => {
+          root.dataset.theme = value;
+          localStorage.setItem(storageKey, value);
+          updateThemeUI();
+        };
+
+        toggle?.addEventListener("click", () => {
+          const nextTheme = getResolvedTheme() === "dark" ? "light" : "dark";
+          setTheme(nextTheme);
+        });
+
+        mediaQuery.addEventListener("change", updateThemeUI);
+        updateThemeUI();
+      })();
+
+      (() => {
+        const root = document.documentElement;
+        const toggle = document.querySelector("[data-sidebar-toggle]");
+        const overlay = document.querySelector("[data-sidebar-overlay]");
+
+        const closeSidebar = () => {
+          root.classList.remove("sidebar-open");
+          toggle?.setAttribute("aria-expanded", "false");
+        };
+
+        const openSidebar = () => {
+          root.classList.add("sidebar-open");
+          toggle?.setAttribute("aria-expanded", "true");
+        };
+
+        toggle?.addEventListener("click", () => {
+          if (root.classList.contains("sidebar-open")) {
+            closeSidebar();
+          } else {
+            openSidebar();
+          }
+        });
+
+        overlay?.addEventListener("click", closeSidebar);
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") closeSidebar();
+        });
+
+        document.querySelectorAll(".sidebar a").forEach((link) => {
+          link.addEventListener("click", closeSidebar);
+        });
+      })();
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".prose pre").forEach((pre) => {
+          if (pre.parentElement?.classList.contains("code-shell")) return;
+          const wrapper = document.createElement("div");
+          wrapper.className = "code-shell";
+          pre.parentNode?.insertBefore(wrapper, pre);
+          wrapper.appendChild(pre);
+
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = "Copy";
+          button.setAttribute("data-copy-code", "true");
+          wrapper.appendChild(button);
+        });
+      });
+
+      document.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-copy-code]");
+        if (!button) return;
+        const pre = button.parentElement?.querySelector("pre");
+        if (!pre) return;
+        navigator.clipboard.writeText(pre.innerText).then(() => {
+          const original = button.textContent;
+          button.textContent = "Copied";
+          setTimeout(() => {
+            button.textContent = original;
+          }, 1400);
+        });
+      });
+    </script>
+  </body>
+</html>

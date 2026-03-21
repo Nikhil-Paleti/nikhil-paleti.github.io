@@ -1,0 +1,22 @@
+---
+export interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  source?: string;
+  wide?: boolean;
+}
+
+const { src, alt, caption, source, wide = false } = Astro.props;
+---
+
+<figure class:list={["figure", wide && "figure-wide"]}>
+  <img src={src} alt={alt} loading="lazy" />
+  {(caption || source) && (
+    <figcaption>
+      {caption}
+      {caption && source ? " " : ""}
+      {source && <span class="figure-source">Source: {source}</span>}
+    </figcaption>
+  )}
+</figure>

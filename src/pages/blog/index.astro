@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout
+  title="Blog"
+  description="Long-form writing about machine learning systems, optimization, and implementation details."
+>
+  <section class="shell page-shell">
+    <h1>Blog</h1>
+    <p class="lede compact-width">
+      Notes on machine learning systems, GPU performance, and things I had to learn
+      the hard way.
+    </p>
+
+    <div class="stack-list">
+      {posts.map((post) => (
+        <article class="list-entry">
+          <p class="entry-date">
+            {post.data.date.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric"
+            })}
+          </p>
+          <div>
+            <h2>
+              <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+            </h2>
+            <p>{post.data.description}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
