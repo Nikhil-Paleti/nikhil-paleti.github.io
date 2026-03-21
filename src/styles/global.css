@@ -99,6 +99,7 @@ main {
   left: 0;
   width: var(--sidebar-width);
   height: 100vh;
+  overflow-y: auto;
   border-right: 1px solid var(--line);
   background: var(--sidebar-bg);
   backdrop-filter: blur(18px);
@@ -107,16 +108,17 @@ main {
 
 .sidebar-inner {
   display: flex;
-  min-height: 100%;
+  min-height: 100vh;
   flex-direction: column;
   padding: 2rem 1.5rem 1.4rem;
-  justify-content: space-between;
 }
 
 .sidebar-main {
   display: grid;
   align-content: start;
   justify-items: center;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .sidebar-profile {
@@ -196,6 +198,7 @@ main {
 .sidebar-footer {
   display: flex;
   justify-content: center;
+  margin-top: auto;
   padding-top: 1.5rem;
 }
 
