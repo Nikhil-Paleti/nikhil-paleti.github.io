@@ -8,7 +8,7 @@ import rehypeSlug from "rehype-slug";
 import remarkMath from "remark-math";
 
 export default defineConfig({
-  site: "https://nikhil-paleti.github.io",
+  site: "https://nikhilpaleti.dev",
   integrations: [mdx(), sitemap()],
   markdown: {
     remarkPlugins: [remarkMath],
