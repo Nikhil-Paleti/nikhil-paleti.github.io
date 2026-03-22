@@ -576,6 +576,22 @@ h2 {
 
 .article-meta {
   margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tag-list li {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--accent-soft);
+  border-radius: 999px;
+  padding: 0.22rem 0.7rem;
 }
 
 .article-layout {
@@ -615,8 +631,12 @@ h2 {
 
 .prose h2 {
   font-size: clamp(1.32rem, 1.7vw, 1.7rem);
-  padding-top: 0.25rem;
+  padding-top: 0.75rem;
   border-top: 1px solid var(--line);
+}
+
+.prose h2 + h3 {
+  margin-top: 1rem;
 }
 
 .prose h3 {

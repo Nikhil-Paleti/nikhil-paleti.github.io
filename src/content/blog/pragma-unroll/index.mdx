@@ -1,0 +1,321 @@
+---
+title: "#pragma unroll"
+description: >
+  Notes on #pragma unroll: what latency-bound means on a GPU, why warps alone can't always fix it, and how the compiler uses unrolling to hide SFU and memory latency in SASS.
+date: 2026-03-21
+tags:
+  - cuda
+  - gpu
+  - optimization
+  - compiler
+draft: false
+featured: true
+---
+
+## Latency on GPUs
+
+GPU performance depends on keeping the cores busy with continuous work. A kernel
+is latency-bound when the warp scheduler frequently cannot issue instructions
+because it is waiting on previous instructions results.
+
+```c++
+float a = b + c;   // issued at cycle 0, result ready at cycle 4
+float g = a + 5;   // needs 'a' so cannot issue until cycle 4
+```
+
+Cycles 1–3 are dead for this warp. The scheduler has no valid instruction to
+issue because `g = a + 5` is blocked and there is nothing else to issue.
+
+### Instruction latency by execution unit
+
+There are three classes of operations we consider for
+latency analysis, each with very different costs.
+
+1. **ALU**: `FFMA`, `FADD`, `FMUL`, `IADD` and the rest of the arithmetic ops.
+These are fast: roughly **4–6 cycles** of latency and the
+scheduler can issue one per clock and pipeline them.
+
+2. **SFU**: `rsqrtf`, `sinf`, `cosf`, `rcpf`, `exp2f`, `log2f`. The Special
+Function Unit evaluates these math functions in hardware using polynomial
+approximations. On Ampere and Hopper it carries roughly **16 cycles of latency**.
+
+3. **Memory**: loads and stores. L1 hits cost ~**28–32 cycles**, L2 hits
+~**100–200 cycles**, and a full HBM miss runs ~**600–700 cycles**. These
+numbers are orders of magnitude larger.
+
+### Pipelining within a single warp
+
+Consider a warp with four FP32 instructions (each taking 4 cycles):
+
+```asm
+I0: r2 = r0 * r1        // FMUL
+I1: r5 = r3 + r4        // FADD
+I2: r6 = r2 + r1        // FADD — depends on I0 (reads r2)
+I3: r8 = r6 * r7        // FMUL — depends on I2 (reads r6)
+```
+
+I0 and I1 are independent, so the scheduler issues them on consecutive clocks
+(issued on cycle 0 and cycle 1, ready by cycle 4 and cycle 5), and the ALU
+pipelines them in parallel:
+
+```asm
+Cycle 0:  I0 issued - enters pipeline stage 1
+Cycle 1:  I1 issued - enters pipeline stage 1 (I0 is now in stage 2)
+Cycle 2:  (no issue) — I2 needs r2, not ready yet (I0 in stage 3 and I1 in stage 2)
+Cycle 3:  (no issue) — still waiting
+Cycle 4:  r2 ready -  I2 issued - enters pipeline stage 1
+Cycle 5:  (no issue) — I3 needs r6, not ready yet
+...
+Cycle 8:  r6 ready -  I3 issued
+```
+
+The RAW dependency on `r2` stalls I2 for 2 cycles (cycles 2–3). I1 happened to
+be independent so it filled cycle 1, but nothing fills cycles 2–3, or 5–7 after
+I2. Five idle cycles total.
+
+### Two warps: hiding the bubble
+
+If a second warp is resident on the same SM, the scheduler fills those idle
+cycles with it:
+
+```asm
+Cycle 0:  Warp A — I0 issued
+Cycle 1:  Warp A — I1 issued
+Cycle 2:  Warp B — I0 issued   - A is stalled, B fills the gap
+Cycle 3:  Warp B — I1 issued
+Cycle 4:  Warp A — I2 issued   - r2 ready, A resumes
+Cycle 5:  Warp B — I2 issued
+...
+```
+
+The execution unit sees a continuous stream of instructions. Neither warp ran
+faster in isolation, both still waited the same number of cycles for their
+dependent results, but the ALU pipeline stayed full throughout. Latency is not reduced, it is hidden.
+
+### Occupancy and its ceiling
+
+High occupancy is the classical GPU answer to
+latency. If 32 warps are eligible and one stalls on an `rsqrtf`, the scheduler
+simply picks another. But occupancy has hard ceilings: register file capacity,
+shared memory allocation, and the number of blocks you actually launch. When
+any of those limits bites, intra-warp instruction-level parallelism (ILP) becomes
+the only remaining tool.
+
+## Instruction-level parallelism inside a loop
+
+Say we have a kernel where each thread processes `n` elements from a private
+slice of global memory. Each element goes through one `rsqrtf` and a chain of
+dependent ALU ops:
+
+```cpp
+__global__ void kernel(const float* data, float* out, int n) {
+    int tid = blockIdx.x * blockDim.x + threadIdx.x;
+    const float* d = data + tid * n;
+    float acc = 0.f;
+    for (int i = 0; i < n; i++) {
+        float x = d[i];
+        float r = rsqrtf(x);   // SFU — 16 cycle latency
+        acc += r;              // FFMA — RAW on r
+        acc *= 0.99f;          // FFMA
+        acc += x * 0.5f;       // FFMA
+        acc -= x * 0.1f;       // FFMA
+        acc *= 1.01f;          // FMUL
+        acc += x * x * 0.01f;  // FFMA + FMUL
+        acc -= r * 0.5f;       // FFMA
+        acc += 0.001f;         // FADD  — 8 dependent ALU ops total
+    }
+    out[tid] = acc;
+}
+```
+
+Let's look at what the scheduler actually sees inside this loop.
+
+### Serial stalls
+
+One iteration looks like this to the scheduler:
+
+```cpp
+float r = rsqrtf(d[i]);   // MUFU.RSQ - 16 cycle latency
+acc += r;                  // FFMA - depends on r (RAW)
+acc *= 0.99f;              // FFMA
+acc += d[i] * 0.5f;       // FFMA
+// ... 5 more ALU ops
+```
+
+The RAW dependency on `r` forces the same stall pattern we saw before, but now
+it repeats every iteration:
+
+```asm
+Cycle  0:  MUFU.RSQ r, d[i]
+Cycle  1:  (stall) — r not ready
+...
+Cycle 15:  (stall)
+Cycle 16:  (r ready)  FFMA acc, r, ...
+Cycle 17:  FFMA acc, acc, 0.99
+...
+Cycle 24:  loop back-edge — next iteration starts
+Cycle 25:  MUFU.RSQ r, d[i+1]   // same 16-cycle stall again
+```
+
+Every iteration begins with a dead 16-cycle window. There is
+nothing else in the instruction stream for the scheduler to issue during it.
+The warp scheduler could hide this by switching to another warp, but only if
+there are enough resident warps to cover the gap. If register pressure is high
+or the launch config is small, occupancy drops and those 16 cycles simply burn.
+
+### `#pragma unroll`
+
+`#pragma unroll N` tells the compiler to replicate the loop body N times before
+the back-edge, reducing the trip count by N:
+
+```cpp
+// Without unroll - 10 iterations, one body each
+for (int i = 0; i < 10; i++) {
+    do_work(i);
+}
+
+// With #pragma unroll 2: 5 iterations, two bodies each
+for (int i = 0; i < 10; i += 2) {
+    do_work(i);
+    do_work(i + 1);
+}
+```
+
+The loop overhead shrinks, but more importantly, the compiler now sees N copies
+of the body as one straight-line block. Applied to our kernel:
+
+```cpp
+#pragma unroll 4
+for (int i = 0; i < n; i++) {
+    float x = d[i];
+    float r = rsqrtf(x);
+    acc += r;
+    acc *= 0.99f;
+    acc += x * 0.5f;
+    // ...
+}
+```
+
+The compiler unrolls this into four consecutive copies of the body. Because it
+can now see across what were formerly loop boundaries, ptxas reschedules
+instructions globally across all four copies.
+
+## What the compiler actually emits
+
+### Without `#pragma unroll`
+
+With no unrolling, ptxas emits the body once per iteration. Each `MUFU.RSQ` is
+immediately followed by the ALU chain that depends on it, so the stall is
+unavoidable:
+
+```asm
+LD      x[0]
+MUFU.RSQ  r0, x[0]          // MUFU issued — 16 cycle latency starts
+// ···  16-cycle stall  ···
+FFMA    acc, r0, acc         // finally, r0 is ready
+FFMA    acc, acc, 0.99
+FFMA    acc, x[0], 0.5
+// ···  5 more ALU ops  ···
+
+LD      x[1]
+MUFU.RSQ  r1, x[1]          // another 16-cycle stall
+// ···  16-cycle stall  ···
+FFMA    acc, r1, acc
+// ···
+```
+
+Four iterations, four stalls, nothing filling the gaps.
+
+### With `#pragma unroll 4`
+
+ptxas sees all four copies as one straight-line block. The `rsqrtf` calls across
+iterations are fully independent, so it groups the `MUFU.RSQ` instructions
+together and hoists the loads before them:
+
+```asm
+LD      x[0]
+LD      x[1]
+LD      x[2]
+LD      x[3]
+MUFU.RSQ  r0, x[0]          // all four SFU ops fired back-to-back
+MUFU.RSQ  r1, x[1]          // independent — no stall between them
+MUFU.RSQ  r2, x[2]
+MUFU.RSQ  r3, x[3]
+// ···  ~12 cycles of stall, then r0 arrives  ···
+FFMA    acc, r0, acc         // r0 ready — 16 cycles have elapsed
+FFMA    acc, acc, 0.99
+FFMA    acc, x[0], 0.5
+// ···  5 more ALU ops — r1, r2, r3 all become ready during this chain  ···
+FFMA    acc, r1, acc
+// ···
+```
+
+One stall window instead of four. The ALU chain from iteration 0 fills the
+remaining latency of iterations 1–3.
+
+## The benchmark
+
+The earlier sections identified two latency sources that unrolling can hide: SFU
+latency (~16 cycles for `rsqrtf`) and load latency (~28–32 cycles for L1,
+~100–200 for L2). The benchmark measures both.
+
+Five kernels use unroll factors 1, 2, 4, 8, and 16 with the same body: one load,
+one `rsqrtf`, and eight dependent ALU ops. The real benchmark also includes a
+`__sinf` call (a second SFU op per iteration); scheduling behaves as described
+above. Hardware: H100 80GB, sm\_90, CUDA 12.2. Full code is on
+[GitHub](https://github.com/nikhil-paleti/pragma_unroll_benchmark).
+
+The kernel launches 1024 blocks of 256 threads (262,144 threads total). The full
+data array is 262144 × N × 4 bytes—64MB at N=64 and 512MB at N=512. Neither fits
+in L2 globally; what matters is the per-SM working set. Each SM gets a slice of
+blocks whose data fits in L1. After 20 warmup launches, each SM's slice is hot in
+local L1 or L2 when measurements run over 1000 iterations. N=64 keeps traffic in
+L1; N=512 spills to L2—two regimes, two dominant latency sources.
+
+### N=64 — L1 resident
+
+| Kernel | Registers | Time (µs) | Speedup |
+| --- | --- | --- | --- |
+| unroll\_1 | 15 | 111.10 | 1.00× |
+| unroll\_2 | 20 | 78.88 | 1.41× |
+| unroll\_4 | 20 | 72.65 | 1.53× |
+| unroll\_8 | 30 | 71.13 | 1.56× |
+| unroll\_16 | 27 | 70.69 | 1.57× |
+
+### N=512 — L2 resident
+
+| Kernel | Registers | Time (µs) | Speedup |
+| --- | --- | --- | --- |
+| unroll\_1 | 15 | 2111.57 | 1.00× |
+| unroll\_2 | 20 | 852.03 | 2.48× |
+| unroll\_4 | 20 | 541.73 | 3.90× |
+| unroll\_8 | 30 | 538.56 | 3.92× |
+| unroll\_16 | 27 | 536.66 | 3.93× |
+
+### L1 vs L2
+
+L1 tops out at ~1.57x. SFU latency is the main bottleneck here and unroll=4
+mostly covers it. L2 is a different story. At unroll=1, each load misses L1
+and waits 100–200 cycles on top of the SFU stalls, and both stack serially.
+Unrolling to 4 lets ptxas hoist all four loads together, collapsing four serial
+waits into roughly one. That is where the ~4x improvement comes from.
+
+### unroll\_16 uses fewer registers than unroll\_8
+
+More unrolling usually means more live values, so this looks backward. The
+plausible explanation is better register coloring over a larger straight-line
+block: ptxas has more context to reuse values across 16 copies than across eight.
+The 30-register peak at unroll=8 is likely a local maximum that the bigger block
+lets the allocator escape.
+
+## Takeaways
+
+**`#pragma unroll` exposes ILP to the scheduler.** It gives ptxas enough
+  straight-line code to reorder across former loop boundaries. Without it, each
+  iteration begins with a stall the compiler cannot hide by itself.
+
+The register cost is worth watching. This can
+hurt occupancy on register-constrained kernels and cancel out what you gained.
+In this benchmark that was not an issue, but in a real kernel it might be.
+
+Profile first.
