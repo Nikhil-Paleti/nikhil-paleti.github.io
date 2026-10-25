@@ -67,6 +67,16 @@ for (const file of (await readdir(root, { recursive: true })).filter((file) => f
   descriptions.add(description);
   assert.equal(meta(html, "og:title"), pageTitle);
   assert.equal(meta(html, "twitter:title"), pageTitle);
+  const imageUrl = meta(html, "og:image");
+  assert.equal(meta(html, "twitter:image"), imageUrl, `${route}: consistent sharing image`);
+  assert.equal(meta(html, "twitter:image:alt"), meta(html, "og:image:alt"));
+  assert.ok(meta(html, "og:image:alt")?.trim(), `${route}: sharing image description required`);
+  assert.equal(path.extname(new URL(imageUrl).pathname), ".png", `${route}: raster sharing image required`);
+  const image = await readFile(localFile(imageUrl));
+  assert.equal(image.subarray(0, 8).toString("hex"), "89504e470d0a1a0a", `${route}: valid PNG signature`);
+  assert.equal(image.readUInt32BE(16), Number(meta(html, "og:image:width")));
+  assert.equal(image.readUInt32BE(20), Number(meta(html, "og:image:height")));
+  assert.ok(image.length < 5 * 1024 * 1024, `${route}: sharing image under 5 MB`);
   assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, `${route}: one primary heading`);
   const nodes = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
     .filter(([, attrs]) => attributes(attrs).type === "application/ld+json")
@@ -75,7 +85,16 @@ for (const file of (await readdir(root, { recursive: true })).filter((file) => f
   nodes.forEach(checkSchemaUrls);
   for (const node of nodes) {
     if (node["@type"] === "CollectionPage") assert.equal(node.url, url, `${route}: collection URL must match canonical`);
-    if (node["@type"] === "BlogPosting") assert.equal(node.mainEntityOfPage, url, `${route}: article URL must match canonical`);
+    if (node["@type"] === "WebSite" || node["@type"] === "BlogPosting") {
+      assert.equal(node.author["@id"], `${origin}/#person`, `${route}: stable author identity`);
+      assert.equal(node.author.url, `${origin}/about/`, `${route}: author profile URL`);
+    }
+    if (node["@type"] === "BlogPosting") {
+      assert.equal(node.mainEntityOfPage, url, `${route}: article URL must match canonical`);
+      assert.equal(node.image, imageUrl);
+      assert.equal(meta(html, "og:type"), "article");
+      assert.ok(tags(html, "a").some((tag) => tag.rel === "author" && tag.href === "/about/"), `${route}: visible author link`);
+    }
   }
   console.log(`PASS SEO ${route}: title, description, canonical, schema, heading`);
 }

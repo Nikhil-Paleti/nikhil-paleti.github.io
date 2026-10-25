@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { home, site, updates } from "../data/site";
+import { home, person, site, updates } from "../data/site";
 const socials = [
   { label: "LinkedIn", href: site.social.linkedin },
   { label: "GitHub", href: site.social.github },
@@ -18,9 +18,9 @@ const writing = [
   { title: "Selected publications", description: "Applied machine learning research.", links: [{ label: "Publications", href: "/publications/" }] }
 ];
 const homeJsonLd = {
-  "@context": "https://schema.org", "@type": "Person", name: site.author,
-  url: site.url, jobTitle: site.role, description: home.intro, email: site.email,
-  homeLocation: { "@type": "Place", name: site.location }, sameAs: Object.values(site.social)
+  "@context": "https://schema.org", ...person,
+  jobTitle: site.role, description: home.intro, email: site.email,
+  homeLocation: { "@type": "Place", name: site.location }
 };
 ---
 <BaseLayout title="ML Infrastructure Engineer & Researcher" description={site.description} jsonLd={homeJsonLd}>
