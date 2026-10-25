@@ -82,6 +82,13 @@ try {
     const overflow = await page.evaluate(() => ({ width: innerWidth, scrollWidth: document.documentElement.scrollWidth, elements: [...document.querySelectorAll("main *")].filter(el => el.getBoundingClientRect().right > innerWidth).slice(0, 12).map(el => ({ tag: el.tagName, class: el.className })) }));
     assert.ok(overflow.scrollWidth <= overflow.width, `${route}: mobile overflow ${JSON.stringify(overflow)}`);
     if (route === "/blog/pragma-unroll/") {
+      const author = page.locator(".article-byline a");
+      assert.equal(await author.innerText(), "Nikhil Paleti");
+      assert.equal(await author.getAttribute("href"), "/about/");
+      await author.click();
+      assert.equal(await page.locator("h1").innerText(), "About my work");
+      await page.goBack();
+      assert.equal(await page.locator("h1").innerText(), "#pragma unroll");
       const scrollableCode = await page.locator(".prose pre").evaluateAll((blocks) => blocks.filter(block => block.scrollWidth > block.clientWidth).map(block => {
         block.scrollLeft = 100;
         const result = { overflowX: getComputedStyle(block).overflowX, scrolled: block.scrollLeft > 0 };

@@ -25,10 +25,11 @@
     x="430"
     y="356"
     fill="#9eb0ba"
-    font-size="34"
+    font-size="28"
     font-family="'SFMono-Regular', Consolas, 'Liberation Mono', monospace"
-    letter-spacing="3"
+    letter-spacing="2"
   >
-    MACHINE LEARNING SYSTEMS • GPU PERFORMANCE
+    <tspan x="430">MACHINE LEARNING SYSTEMS</tspan>
+    <tspan x="430" dy="46">GPU PERFORMANCE</tspan>
   </text>
 </svg>

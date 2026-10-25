@@ -1,8 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { home } from "../data/site";
+import { home, person } from "../data/site";
 ---
-<BaseLayout title="About" description={home.intro}>
+<BaseLayout title="About" description={home.intro} jsonLd={{ "@context": "https://schema.org", ...person }}>
   <section class="shell page-shell about-shell">
     <h1>About my work</h1>
     <p class="lede">{home.intro}</p>

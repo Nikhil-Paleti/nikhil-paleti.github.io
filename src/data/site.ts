@@ -7,7 +7,7 @@ export const site = {
   role: "ML systems engineer and researcher",
   location: "Sunnyvale, California",
   email: "npaleti@ucsd.edu",
-  ogImage: "/og-card.svg",
+  ogImage: "/og-card.png",
   ogImageAlt:
     "Nikhil Paleti personal website card with an N monogram and machine learning systems and GPU performance subtitle.",
   twitterHandle: "@nikhil2362",
@@ -18,6 +18,15 @@ export const site = {
     x: "https://x.com/nikhil2362",
     medium: "https://medium.com/@nikhil2362"
   }
+};
+
+// One stable identity across the homepage, author profile, and articles.
+export const person = {
+  "@type": "Person",
+  "@id": `${site.url}/#person`,
+  name: site.author,
+  url: new URL("/about/", site.url).href,
+  sameAs: Object.values(site.social)
 };
 
 export const home = {

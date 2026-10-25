@@ -1,6 +1,6 @@
 ---
 import Header from "../components/Header.astro";
-import { site } from "../data/site";
+import { person, site } from "../data/site";
 import "../styles/global.css";
 import "katex/dist/katex.min.css";
 
@@ -8,6 +8,8 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
+  ogType?: "website" | "article";
   noindex?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
@@ -16,6 +18,8 @@ const {
   title,
   description = site.description,
   image = site.ogImage,
+  imageAlt = site.ogImageAlt,
+  ogType = "website",
   noindex = false,
   jsonLd
 } = Astro.props;
@@ -28,10 +32,7 @@ const defaultJsonLd = {
   name: site.title,
   url: site.url,
   description: site.description,
-  author: {
-    "@type": "Person",
-    name: site.author
-  }
+  author: person
 };
 const jsonLdNodes = jsonLd
   ? Array.isArray(jsonLd)
@@ -55,13 +56,13 @@ const jsonLdNodes = jsonLd
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="alternate" type="application/rss+xml" title={`${site.title} RSS`} href="/rss.xml" />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.title} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={imageUrl} />
-    <meta property="og:image:alt" content={site.ogImageAlt} />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_US" />
@@ -72,7 +73,7 @@ const jsonLdNodes = jsonLd
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
-    <meta name="twitter:image:alt" content={site.ogImageAlt} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     {
       jsonLdNodes.map((node) => (
