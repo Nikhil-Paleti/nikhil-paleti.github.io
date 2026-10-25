@@ -9,7 +9,13 @@ import remarkMath from "remark-math";
 
 export default defineConfig({
   site: "https://nikhilpaleti.dev",
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx(),
+    sitemap({
+      // These legacy URLs redirect and explicitly opt out of indexing.
+      filter: (page) => !["/projects/", "/blog/positional-encoding/"].includes(new URL(page).pathname)
+    })
+  ],
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [

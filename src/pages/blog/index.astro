@@ -10,7 +10,7 @@ const blogJsonLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   name: "Blog",
-  url: `${Astro.site ?? "https://nikhil-paleti.github.io"}/blog/`,
+  url: new URL("/blog/", Astro.site).href,
   description:
     "Long-form writing about machine learning systems, optimization, and implementation details.",
   mainEntity: {
@@ -18,7 +18,7 @@ const blogJsonLd = {
     itemListElement: posts.map((post, index) => ({
       "@type": "ListItem",
       position: index + 1,
-      url: `${Astro.site ?? "https://nikhil-paleti.github.io"}/blog/${post.slug}/`,
+      url: new URL(`/blog/${post.slug}/`, Astro.site).href,
       name: post.data.title
     }))
   }

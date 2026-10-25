@@ -4,6 +4,7 @@ import { site } from "../data/site";
 
 interface Props {
   title: string;
+  seoTitle?: string;
   description: string;
   date: Date;
   tags: string[];
@@ -11,7 +12,7 @@ interface Props {
   heroImage?: string;
 }
 
-const { title, description, date, tags, headings = [], heroImage } = Astro.props;
+const { title, seoTitle, description, date, tags, headings = [], heroImage } = Astro.props;
 const postJsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -32,7 +33,7 @@ const postJsonLd = {
 };
 ---
 
-<BaseLayout title={title} description={description} image={heroImage} jsonLd={postJsonLd}>
+<BaseLayout title={seoTitle ?? title} description={description} image={heroImage} jsonLd={postJsonLd}>
   <section class="shell article-shell">
     <div class="article-header">
       <p class="eyebrow">Blog</p>
