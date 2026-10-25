@@ -74,7 +74,7 @@ try {
   }
   const context = await browser.newContext({ viewport: { width: 390, height: 1000 }, colorScheme: "light" });
   const page = await context.newPage();
-  for (const route of ["/about/", "/blog/", "/publications/", "/blog/pragma-unroll/", "/blog/positional-encoding/"]) {
+  for (const route of ["/about/", "/blog/", "/publications/", "/blog/pragma-unroll/"]) {
     const response = await page.goto(origin + route);
     assert.equal(response.status(), 200);
     assert.equal(await page.locator("h1").count(), 1);
@@ -83,6 +83,13 @@ try {
     assert.ok(overflow.scrollWidth <= overflow.width, `${route}: mobile overflow ${JSON.stringify(overflow)}`);
     console.log(`PASS route ${route}`);
   }
+  // This existing route intentionally redirects to the original Medium article.
+  const archivedPost = await context.request.get(origin + "/blog/positional-encoding/");
+  assert.equal(archivedPost.status(), 200);
+  const archivedHtml = await archivedPost.text();
+  assert.ok(archivedHtml.includes('http-equiv="refresh"'));
+  assert.ok(archivedHtml.includes("https://medium.com/thedeephub/positional-encoding-explained-a-deep-dive-into-transformer-pe-65cfe8cfe10b"));
+  console.log("PASS existing positional-encoding archive redirect");
   const resume = await context.request.get(origin + "/Nikhil_Paleti_Resume.pdf");
   assert.equal(resume.status(), 200);
   assert.equal(resume.headers()["content-type"], "application/pdf");
