@@ -8,7 +8,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "test:browser": "node tests/browser-qa.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
+    "playwright": "1.57.0",
     "typescript": "^5.9.3"
   }
 }
