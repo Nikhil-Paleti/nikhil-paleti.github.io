@@ -78,8 +78,9 @@ try {
     const response = await page.goto(origin + route);
     assert.equal(response.status(), 200);
     assert.equal(await page.locator("h1").count(), 1);
-    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${route}: mobile overflow`);
     await page.screenshot({ path: `test-results/screenshots/${route.split("/").filter(Boolean).join("-")}-390.png`, fullPage: true });
+    const overflow = await page.evaluate(() => ({ width: innerWidth, scrollWidth: document.documentElement.scrollWidth, elements: [...document.querySelectorAll("main *")].filter(el => el.getBoundingClientRect().right > innerWidth).slice(0, 12).map(el => ({ tag: el.tagName, class: el.className })) }));
+    assert.ok(overflow.scrollWidth <= overflow.width, `${route}: mobile overflow ${JSON.stringify(overflow)}`);
     console.log(`PASS route ${route}`);
   }
   const resume = await context.request.get(origin + "/Nikhil_Paleti_Resume.pdf");

@@ -436,6 +436,7 @@ h2 {
 }
 
 .prose {
+  min-width: 0;
   max-width: var(--content-width);
   font-size: 1rem;
   line-height: 1.72;
@@ -717,6 +718,7 @@ h2 {
 }
 
 .about-column .prose {
+  min-width: 0;
   max-width: 100%;
 }
 
