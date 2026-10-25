@@ -47,6 +47,7 @@ for (const file of (await readdir(root, { recursive: true })).filter((file) => f
   const route = `/${file.split(path.sep).join("/").replace(/index\.html$/, "")}`;
   const url = new URL(route, origin).href;
   const html = await readFile(path.join(root, file), "utf8");
+  assert.ok(!html.includes("npaleti@ucsd.edu"), `${route}: remove outdated public contact`);
   routeHtml.set(route, html);
   const isRedirect = tags(html, "meta").some((tag) => tag["http-equiv"]?.toLowerCase() === "refresh");
   const noindex = /\bnoindex\b/i.test(meta(html, "robots") ?? "");
@@ -88,6 +89,10 @@ for (const file of (await readdir(root, { recursive: true })).filter((file) => f
     .filter(([, attrs]) => attributes(attrs).type === "application/ld+json")
     .map(([, , json]) => JSON.parse(json));
   assert.ok(nodes.length > 0, `${route}: structured data required`);
+  if (route === "/") {
+    const profile = nodes.find((node) => node["@type"] === "Person" && node["@id"] === `${origin}/#person`);
+    assert.equal(profile?.email, "nikhilpaleti23@gmail.com", "Homepage uses the approved public email");
+  }
   nodes.forEach(checkSchemaUrls);
   for (const node of nodes) {
     if (node["@type"] === "CollectionPage") assert.equal(node.url, url, `${route}: collection URL must match canonical`);
