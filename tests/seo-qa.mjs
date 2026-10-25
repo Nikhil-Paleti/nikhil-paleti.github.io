@@ -107,6 +107,17 @@ for (const file of (await readdir(root, { recursive: true })).filter((file) => f
 assert.deepEqual([...sitemapUrls].sort(), expectedUrls.sort(), "Sitemap must contain exactly the canonical indexable routes");
 assert.equal(title(routeHtml.get("/")), "ML Infrastructure Engineer & Researcher | Nikhil Paleti");
 assert.equal(title(routeHtml.get("/blog/pragma-unroll/")), "CUDA #pragma unroll: GPU Latency and H100 Benchmarks | Nikhil Paleti");
+const publications = routeHtml.get("/publications/");
+assert.ok(tags(publications, "a").some((tag) => tag.href === "https://neurips.cc/virtual/2026/poster/151156"), "Link the DINO paper to its official NeurIPS record");
+assert.match(publications, /class="author-name is-self">\s*Nikhil C Paleti\s*<\/span>/, "Recognize the official author-name variant");
+for (const [, , json] of [...publications.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)].filter(([, attrs]) => attributes(attrs).type === "application/ld+json")) {
+  const node = JSON.parse(json);
+  if (node["@type"] === "ScholarlyArticle") assert.ok(!node.datePublished, "Do not invent publication dates from year-only metadata");
+  if (node.url === "https://neurips.cc/virtual/2026/poster/151156") {
+    assert.equal(node.headline, "Complementing DINO Features with Image Structure for Part Discovery");
+    assert.deepEqual(node.author.map((author) => author.name), ["Samyak Rawlekar", "Nikhil C Paleti", "Amey Gupta", "Narendra Ahuja"]);
+  }
+}
 assert.match(routeHtml.get("/blog/pragma-unroll/"), /<h1[^>]*>#pragma unroll<\/h1>/, "Preserve the visible article title");
 for (const [route, destination] of [
   ["/projects/", `${origin}/`],

@@ -8,7 +8,7 @@ const publications = (await getCollection("publications")).sort(
 );
 
 const selfNamePattern =
-  /(Nikhil Chowdary Paleti|Nikhil Chowdary P\.|Paleti Nikhil Chowdary)/i;
+  /(Nikhil Chowdary Paleti|Nikhil Chowdary P\.|Paleti Nikhil Chowdary|Nikhil C Paleti)/i;
 
 function formatAuthors(authors: string) {
   return authors.split(",").map((author) => {
@@ -34,7 +34,6 @@ const publicationsJsonLd = [
     headline: publication.data.title,
     name: publication.data.title,
     url: publication.data.href,
-    datePublished: `${publication.data.year}-01-01`,
     isPartOf: {
       "@type": "Periodical",
       name: publication.data.venue
