@@ -29,3 +29,18 @@ jobs:
 
       - name: Build site
         run: npm run build
+
+      - name: Install browser for visual QA
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser QA
+        run: npm run test:browser
+
+      - name: Save browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-qa-screenshots
+          path: test-results/screenshots
+          if-no-files-found: ignore
+          retention-days: 7

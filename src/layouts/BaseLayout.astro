@@ -1,5 +1,5 @@
 ---
-import Sidebar from "../components/Sidebar.astro";
+import Header from "../components/Header.astro";
 import { site } from "../data/site";
 import "../styles/global.css";
 import "katex/dist/katex.min.css";
@@ -103,32 +103,11 @@ const jsonLdNodes = jsonLd
   </head>
   <body>
     <div class="site-shell">
-      <Sidebar currentPath={Astro.url.pathname} />
-
-      <div class="mobile-bar">
-        <button
-          type="button"
-          class="mobile-menu-button"
-          data-sidebar-toggle
-          aria-label="Open navigation"
-          aria-expanded="false"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <a class="mobile-wordmark" href="/">{site.title}</a>
-      </div>
-
-      <button
-        type="button"
-        class="sidebar-overlay"
-        data-sidebar-overlay
-        aria-label="Close navigation"
-      ></button>
+      <a class="skip-link" href="#main-content">Skip to content</a>
+      <Header currentPath={Astro.url.pathname} />
 
       <div class="content-shell">
-        <main class="page-main">
+        <main class="page-main" id="main-content" tabindex="-1">
           <slot />
         </main>
       </div>
@@ -220,40 +199,6 @@ const jsonLdNodes = jsonLd
 
         applyThemePreference();
         updateThemeUI();
-      })();
-
-      (() => {
-        const root = document.documentElement;
-        const toggle = document.querySelector("[data-sidebar-toggle]");
-        const overlay = document.querySelector("[data-sidebar-overlay]");
-
-        const closeSidebar = () => {
-          root.classList.remove("sidebar-open");
-          toggle?.setAttribute("aria-expanded", "false");
-        };
-
-        const openSidebar = () => {
-          root.classList.add("sidebar-open");
-          toggle?.setAttribute("aria-expanded", "true");
-        };
-
-        toggle?.addEventListener("click", () => {
-          if (root.classList.contains("sidebar-open")) {
-            closeSidebar();
-          } else {
-            openSidebar();
-          }
-        });
-
-        overlay?.addEventListener("click", closeSidebar);
-
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape") closeSidebar();
-        });
-
-        document.querySelectorAll(".sidebar a").forEach((link) => {
-          link.addEventListener("click", closeSidebar);
-        });
       })();
 
       document.addEventListener("DOMContentLoaded", () => {

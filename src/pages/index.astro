@@ -1,64 +1,109 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { home, site, updates } from "../data/site";
-
+const socials = [
+  { label: "LinkedIn", href: site.social.linkedin },
+  { label: "GitHub", href: site.social.github },
+  { label: "Google Scholar", href: site.social.scholar },
+  { label: "Twitter / X", href: site.social.x },
+  { label: "Résumé", href: "/Nikhil_Paleti_Resume.pdf" }
+];
+const writing = [
+  { title: "#pragma unroll", description: "GPU latency and compiler unrolling.", links: [
+    { label: "Essay", href: "/blog/pragma-unroll/" },
+    { label: "Benchmarks", href: "/blog/pragma-unroll/#the-benchmark" },
+    { label: "Code", href: "https://github.com/nikhil-paleti/pragma_unroll_benchmark" }
+  ] },
+  { title: "Positional Encoding Explained", description: "Intuition, math, and implementation.", links: [{ label: "Read essay", href: "/blog/positional-encoding/" }] },
+  { title: "Selected publications", description: "Applied machine learning research.", links: [{ label: "Publications", href: "/publications/" }] }
+];
 const homeJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: site.author,
-  url: site.url,
-  jobTitle: site.role,
-  description: home.intro,
-  email: site.email,
-  homeLocation: {
-    "@type": "Place",
-    name: site.location
-  },
-  sameAs: [
-    site.social.github,
-    site.social.linkedin,
-    site.social.scholar,
-    site.social.x,
-    site.social.medium
-  ]
+  "@context": "https://schema.org", "@type": "Person", name: site.author,
+  url: site.url, jobTitle: site.role, description: home.intro, email: site.email,
+  homeLocation: { "@type": "Place", name: site.location }, sameAs: Object.values(site.social)
 };
 ---
-
 <BaseLayout title="Home" description={site.description} jsonLd={homeJsonLd}>
-  <section class="shell home-hero">
-    <div class="hero-copy hero-copy-minimal">
-      <h1>{site.author}</h1>
-      <p class="lede">{home.intro}</p>
-    </div>
-  </section>
-
-  <section class="shell home-section home-about-section">
-    <div class="home-note-grid">
-      {home.details.map((item) => (
-        <section class="home-note">
-          <p class="home-note-label">{item.label}</p>
-          <p>{item.body}</p>
-        </section>
-      ))}
-    </div>
-  </section>
-
-  <section class="shell home-section split-section">
-    <div class="section-heading">
-      <p class="section-label">Latest news / updates</p>
-    </div>
-    <div class="stack-list">
-      {updates.map((item) => (
-        <article class="update-entry">
-          <div class="update-date-column">
-            <p class="entry-date">{item.date}</p>
-          </div>
-          <div class="update-body">
-            <h2>{item.title}</h2>
-            <p>{item.body}</p>
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
+  <div class="shell research-index">
+    <section class="index-hero" aria-labelledby="home-title">
+      <div class="index-kicker"><span>ML infrastructure + ML research</span><span class="location">{site.location}</span></div>
+      <h1 id="home-title">Nikhil Paleti.</h1>
+      <div class="hero-description">
+        <p class="roles">ML infrastructure engineer.<br />ML researcher.</p>
+        <p class="bio">I build machine learning infrastructure and do ML research.<br />Currently at Nuro; previously at Waymo.</p>
+      </div>
+      <ul class="social-links" aria-label="Profiles and résumé">
+        {socials.map((link) => <li><a href={link.href}>{link.label} <span aria-hidden="true">→</span></a></li>)}
+      </ul>
+    </section>
+    <section id="news" class="index-section" aria-labelledby="news-title">
+      <h2 id="news-title" class="index-label">01 / News &amp; updates</h2>
+      <div class="news-rows">
+        {updates.map((item) => <article class="news-row">
+          <time datetime={item.date}>{new Date(`${item.date}-01T12:00:00Z`).toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" })}</time>
+          <details><summary>{item.title}</summary><p>{item.body}</p></details>
+        </article>)}
+      </div>
+    </section>
+    <section class="index-section" aria-labelledby="writing-title">
+      <div class="index-section-heading"><h2 id="writing-title" class="index-label">02 / Selected writing &amp; research</h2><a href="/blog/">View all <span aria-hidden="true">→</span></a></div>
+      <div class="writing-rows">
+        {writing.map((item) => <article class="writing-row">
+          <h3><a href={item.links[0].href}>{item.title}</a></h3><p>{item.description}</p>
+          <ul aria-label={`${item.title} links`}>{item.links.map((link) => <li><a href={link.href}>{link.label} <span aria-hidden="true">→</span></a></li>)}</ul>
+        </article>)}
+      </div>
+    </section>
+    <footer class="index-footer"><span>{site.title} · {site.location}</span><span>Read. Benchmark. Repeat.</span></footer>
+  </div>
 </BaseLayout>
+<style>
+  .research-index { padding-top: 2.5rem; }
+  .index-kicker, .index-label { color: var(--muted); font-family: var(--font-sans); font-size: .7rem; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; }
+  .index-kicker { display: flex; justify-content: space-between; gap: 1rem; }
+  .index-hero h1 { max-width: none; font-family: var(--font-sans); font-size: clamp(4rem, 8.8vw, 7rem); font-weight: 700; letter-spacing: -.04em; line-height: 1.05; margin: 2.2rem 0; }
+  .hero-description { display: grid; grid-template-columns: 1.05fr 1fr; gap: 3rem; align-items: start; }
+  .roles { margin: 0; font-size: clamp(1.3rem, 2.4vw, 1.85rem); letter-spacing: -.035em; line-height: 1.3; }
+  .bio { margin: .2rem 0 0; color: var(--muted); font-size: .95rem; line-height: 1.8; }
+  .social-links { display: flex; flex-wrap: wrap; gap: .6rem 1.6rem; list-style: none; padding: 0; margin: 1.7rem 0 2.3rem; }
+  .social-links a { display: inline-block; padding: .4rem 0; font-size: .9rem; }
+  .research-index a { color: var(--accent); text-decoration: none; }
+  .research-index a:hover { text-decoration: underline; }
+  .index-section { border-top: 1px solid var(--text); scroll-margin-top: 1.5rem; }
+  .index-label { margin: 1.1rem 0; line-height: 1.5; }
+  .index-section-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 1rem; }
+  .index-section-heading > a { font-size: .8rem; }
+  .news-rows { padding-bottom: 1.6rem; }
+  .news-row { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .news-row:last-child, .writing-row:last-child { border-bottom: 0; }
+  time { font-size: .7rem; text-transform: uppercase; color: var(--muted); }
+  summary { cursor: pointer; font-size: 1rem; line-height: 1.5; }
+  summary::marker { font-size: .65em; color: var(--muted); }
+  details p { color: var(--muted); margin: .6rem 0 0; font-size: .9rem; }
+  .writing-row { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr) minmax(12rem, .75fr); gap: 1.5rem; align-items: baseline; padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
+  .writing-row h3 { font-family: var(--font-sans); font-size: 1.5rem; line-height: 1.25; letter-spacing: -.03em; }
+  .writing-row h3 a { color: var(--text); }
+  .writing-row p { margin: 0; font-size: .9rem; color: var(--muted); }
+  .writing-row ul { display: flex; flex-wrap: wrap; gap: .6rem 1rem; list-style: none; margin: 0; padding: 0; font-size: .78rem; }
+  .writing-row li { white-space: nowrap; }
+  .index-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem 2rem; margin-top: 1.5rem; padding: 1.5rem 0 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .78rem; }
+  @media (max-width: 900px) { .writing-row { grid-template-columns: 1.2fr 1fr; } .writing-row ul { grid-column: 1 / -1; } }
+  @media (max-width: 600px) {
+    .research-index { padding-top: 1.8rem; }
+    .index-kicker { font-size: .65rem; }
+    .location { display: none; }
+    .index-hero h1 { max-width: 6ch; font-size: clamp(3.7rem, 16vw, 4.8rem); letter-spacing: -.035em; margin: 1.4rem 0; }
+    .hero-description { display: block; }
+    .roles { font-size: 1.4rem; }
+    .bio { font-size: .85rem; margin-top: 1rem; }
+    .social-links { gap: .3rem 1.2rem; margin: 1.3rem 0 1.6rem; }
+    .social-links a { font-size: .8rem; }
+    .index-label { font-size: .64rem; }
+    .news-row { grid-template-columns: 4.3rem minmax(0, 1fr); gap: .8rem; }
+    summary { font-size: .85rem; }
+    time { font-size: .63rem; }
+    .writing-row { display: block; padding: 1.3rem 0; }
+    .writing-row h3 { font-size: 1.3rem; }
+    .writing-row p { font-size: .85rem; margin: .4rem 0 .7rem; }
+  }
+</style>

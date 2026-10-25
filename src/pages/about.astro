@@ -1,19 +1,14 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { home } from "../data/site";
 ---
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="refresh" content="0; url=/" />
-    <meta name="robots" content="noindex" />
-    <link rel="canonical" href="https://nikhil-paleti.github.io/" />
-    <title>Redirecting…</title>
-  </head>
-  <body>
-    <script>
-      window.location.replace("/");
-    </script>
-    <p><a href="/">Go home</a>.</p>
-  </body>
-</html>
+<BaseLayout title="About" description={home.intro}>
+  <section class="shell page-shell about-shell">
+    <h1>About my work</h1>
+    <p class="lede">{home.intro}</p>
+    <div class="about-stack">
+      {home.details.map((item) => <section class="about-card"><h2>{item.label}</h2><p>{item.body}</p></section>)}
+    </div>
+    <p><a href="/publications/">Research publications</a> · <a href="/Nikhil_Paleti_Resume.pdf">Résumé</a></p>
+  </section>
+</BaseLayout>

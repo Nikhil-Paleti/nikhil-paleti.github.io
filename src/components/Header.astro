@@ -1,0 +1,31 @@
+---
+import { site } from "../data/site";
+const { currentPath = "/" } = Astro.props;
+const links = [
+  { href: "/#news", label: "News" },
+  { href: "/blog/", label: "Writing" },
+  { href: "/publications/", label: "Research" },
+  { href: "/about/", label: "About" }
+];
+---
+<header class="shell index-header">
+  <a class="brand" href="/">NP / {site.title}</a>
+  <div class="header-actions">
+    <nav aria-label="Primary">
+      {links.map((link) => <a href={link.href} aria-current={currentPath.replace(/\/$/, "") === link.href.replace(/\/$/, "") || (link.href === "/blog/" && currentPath.startsWith("/blog/")) ? "page" : undefined}>{link.label}</a>)}
+    </nav>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24" aria-hidden="true" data-theme-icon><circle cx="12" cy="12" r="5" fill="currentColor" /></svg>
+    </button>
+  </div>
+</header>
+<style>
+  .index-header { min-height: 6rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--text); }
+  .brand { font-size: .95rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
+  .header-actions, nav { display: flex; align-items: center; gap: 1.25rem; }
+  nav a { padding: .6rem 0; font-size: .82rem; text-decoration: none; }
+  nav a:hover, nav a[aria-current] { color: var(--accent); text-decoration: underline; }
+  .theme-toggle { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: .75rem; background: none; border: 0; color: var(--muted); cursor: pointer; }
+  .theme-toggle svg { width: 1.1rem; height: 1.1rem; }
+  @media (max-width: 600px) { .index-header { flex-wrap: wrap; gap: 0; padding: .9rem 0 .5rem; } .brand { font-size: .85rem; } .header-actions { width: 100%; justify-content: space-between; gap: .5rem; } nav { gap: 1.4rem; } nav a { font-size: .8rem; } }
+</style>
