@@ -67,6 +67,12 @@ for (const file of (await readdir(root, { recursive: true })).filter((file) => f
   descriptions.add(description);
   assert.equal(meta(html, "og:title"), pageTitle);
   assert.equal(meta(html, "twitter:title"), pageTitle);
+  const stylesheets = tags(html, "link").filter((tag) => tag.rel === "stylesheet");
+  assert.ok(stylesheets.some((tag) => tag.href?.startsWith("https://fonts.googleapis.com/css2?")), `${route}: discover fonts directly from HTML`);
+  const css = (await Promise.all(stylesheets.filter((tag) => tag.href?.startsWith("/")).map((tag) => readFile(localFile(new URL(tag.href, origin)), "utf8")))).join("\n");
+  assert.ok(!/@import[^;]*fonts\.googleapis\.com/.test(css), `${route}: no chained font import`);
+  if (route === "/") assert.ok(!/\.katex-mathml\b/.test(css), "Homepage must not load article math CSS");
+  if (route === "/blog/pragma-unroll/") assert.match(css, /\.katex-mathml\b/, "Article math styles remain available");
   const imageUrl = meta(html, "og:image");
   assert.equal(meta(html, "twitter:image"), imageUrl, `${route}: consistent sharing image`);
   assert.equal(meta(html, "twitter:image:alt"), meta(html, "og:image:alt"));
