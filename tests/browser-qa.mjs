@@ -81,6 +81,16 @@ try {
     await page.screenshot({ path: `test-results/screenshots/${route.split("/").filter(Boolean).join("-")}-390.png`, fullPage: true });
     const overflow = await page.evaluate(() => ({ width: innerWidth, scrollWidth: document.documentElement.scrollWidth, elements: [...document.querySelectorAll("main *")].filter(el => el.getBoundingClientRect().right > innerWidth).slice(0, 12).map(el => ({ tag: el.tagName, class: el.className })) }));
     assert.ok(overflow.scrollWidth <= overflow.width, `${route}: mobile overflow ${JSON.stringify(overflow)}`);
+    if (route === "/blog/pragma-unroll/") {
+      const scrollableCode = await page.locator(".prose pre").evaluateAll((blocks) => blocks.filter(block => block.scrollWidth > block.clientWidth).map(block => {
+        block.scrollLeft = 100;
+        const result = { overflowX: getComputedStyle(block).overflowX, scrolled: block.scrollLeft > 0 };
+        block.scrollLeft = 0;
+        return result;
+      }));
+      assert.ok(scrollableCode.length > 0);
+      assert.ok(scrollableCode.every(block => block.overflowX === "auto" && block.scrolled), "Wide code remains horizontally scrollable");
+    }
     console.log(`PASS route ${route}`);
   }
   // This existing route intentionally redirects to the original Medium article.
