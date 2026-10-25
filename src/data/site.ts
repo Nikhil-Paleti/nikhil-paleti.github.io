@@ -6,7 +6,7 @@ export const site = {
   author: "Nikhil Chowdary Paleti",
   role: "ML systems engineer and researcher",
   location: "Sunnyvale, California",
-  email: "npaleti@ucsd.edu",
+  email: "nikhilpaleti23@gmail.com",
   ogImage: "/og-card.png",
   ogImageAlt:
     "Nikhil Paleti personal website card with an N monogram and machine learning systems and GPU performance subtitle.",
