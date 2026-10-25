@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "test:browser": "node tests/browser-qa.mjs"
+    "test:browser": "node tests/browser-qa.mjs",
+    "test:seo": "node tests/seo-qa.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
