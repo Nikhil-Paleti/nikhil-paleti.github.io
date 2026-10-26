@@ -773,21 +773,21 @@ h2 {
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #10161a;
-    --bg-radial-top: #172026;
-    --bg-radial-bottom: #0a0f12;
-    --surface: #151d22;
-    --surface-strong: #1f2a31;
-    --text: #e2edf2;
-    --text-strong: #f1f7fa;
-    --muted: #9eb0ba;
-    --line: rgba(226, 237, 242, 0.12);
-    --accent: #74b6cf;
-    --accent-soft: rgba(116, 182, 207, 0.14);
-    --header-bg: rgba(16, 22, 26, 0.82);
-    --button-bg: rgba(21, 29, 34, 0.95);
-    --quote-text: #d2e0e6;
-    --sidebar-bg: rgba(12, 17, 20, 0.94);
+    --bg: #151619;
+    --bg-radial-top: #1c1e22;
+    --bg-radial-bottom: #151619;
+    --surface: #1c1e22;
+    --surface-strong: #25282e;
+    --text: #e7e8ea;
+    --text-strong: #f5f6f7;
+    --muted: #abb0ba;
+    --line: #363a42;
+    --accent: #8eafff;
+    --accent-soft: rgba(142, 175, 255, 0.12);
+    --header-bg: rgba(21, 22, 25, 0.82);
+    --button-bg: #1c1e22;
+    --quote-text: #d8dbe2;
+    --sidebar-bg: rgba(21, 22, 25, 0.94);
   }
 
   a {
@@ -806,40 +806,46 @@ h2 {
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #10161a;
-  --bg-radial-top: #172026;
-  --bg-radial-bottom: #0a0f12;
-  --surface: #151d22;
-  --surface-strong: #1f2a31;
-  --text: #e2edf2;
-  --text-strong: #f1f7fa;
-  --muted: #9eb0ba;
-  --line: rgba(226, 237, 242, 0.12);
-  --accent: #74b6cf;
-  --accent-soft: rgba(116, 182, 207, 0.14);
-  --header-bg: rgba(16, 22, 26, 0.82);
-  --button-bg: rgba(21, 29, 34, 0.95);
-  --quote-text: #d2e0e6;
-  --sidebar-bg: rgba(12, 17, 20, 0.94);
+  --bg: #151619;
+  --bg-radial-top: #1c1e22;
+  --bg-radial-bottom: #151619;
+  --surface: #1c1e22;
+  --surface-strong: #25282e;
+  --text: #e7e8ea;
+  --text-strong: #f5f6f7;
+  --muted: #abb0ba;
+  --line: #363a42;
+  --accent: #8eafff;
+  --accent-soft: rgba(142, 175, 255, 0.12);
+  --header-bg: rgba(21, 22, 25, 0.82);
+  --button-bg: #1c1e22;
+  --quote-text: #d8dbe2;
+  --sidebar-bg: rgba(21, 22, 25, 0.94);
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
 }
 
-:root[data-theme="dark"] a {
-  text-decoration-color: rgba(216, 168, 109, 0.5);
-}
-
+/* Dark-only finishing rules. Light mode keeps its existing palette and code colors. */
+:root[data-theme="dark"] a { text-decoration-color: var(--accent); }
+:root[data-theme="dark"] .code-shell > button { border-color: #75808e; }
+:root[data-theme="dark"] .code-shell > button:hover { border-color: var(--accent); color: var(--text-strong); }
+:root[data-theme="dark"] .astro-code { background-color: var(--surface) !important; }
+:root[data-theme="dark"] .astro-code,
+:root[data-theme="dark"] .astro-code span { color: var(--shiki-dark) !important; }
 :root[data-theme="dark"] .figure img,
-:root[data-theme="dark"] .prose pre {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
-}
-
-:root[data-theme="dark"] .code-shell > button:hover,
+:root[data-theme="dark"] .prose pre { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02); }
 :root[data-theme="dark"] .sidebar-social:hover,
-:root[data-theme="dark"] .sidebar-theme-toggle:hover {
-  border-color: rgba(232, 225, 212, 0.18);
+:root[data-theme="dark"] .sidebar-theme-toggle:hover { border-color: rgba(232, 225, 212, 0.18); }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) a { text-decoration-color: var(--accent); }
+  :root:not([data-theme="light"]) .code-shell > button { border-color: #75808e; }
+  :root:not([data-theme="light"]) .code-shell > button:hover { border-color: var(--accent); color: var(--text-strong); }
+  :root:not([data-theme="light"]) .astro-code { background-color: var(--surface) !important; }
+  :root:not([data-theme="light"]) .astro-code,
+  :root:not([data-theme="light"]) .astro-code span { color: var(--shiki-dark) !important; }
 }
 
 @media (max-width: 900px) {
@@ -931,3 +937,4 @@ h2 {
 .skip-link { position: absolute; left: 1rem; top: -5rem; z-index: 50; padding: .6rem 1rem; background: var(--bg); }
 .skip-link:focus { top: 1rem; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+

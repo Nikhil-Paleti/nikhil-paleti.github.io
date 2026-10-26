@@ -3,6 +3,8 @@ import { createServer } from "node:http";
 import { readFile, stat, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "playwright";
+import { captureThemePreviews } from "./helpers/theme-previews.mjs";
+import { verifyThemes } from "./helpers/theme-qa.mjs";
 
 // Exercise the production build without publishing it anywhere.
 const root = path.resolve("dist");
@@ -22,6 +24,8 @@ await mkdir("test-results/screenshots", { recursive: true });
 let browser;
 try {
   browser = await chromium.launch();
+  await captureThemePreviews(browser, origin);
+  await verifyThemes(browser, origin);
   for (const width of [375, 390, 768, 1440]) {
     for (const colorScheme of ["light", "dark"]) {
       const context = await browser.newContext({ viewport: { width, height: 1000 }, colorScheme });
@@ -119,3 +123,4 @@ try {
   await browser?.close();
   await new Promise((resolve) => server.close(resolve));
 }
+
