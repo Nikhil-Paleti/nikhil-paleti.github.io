@@ -4,7 +4,7 @@ import katex from 'katex';
 const rgb = (value) => value.match(/[\d.]+/g).slice(0, 3).map(Number);
 const luminance = (value) => rgb(value).map(x => x / 255).map(x => x <= .04045 ? x / 12.92 : ((x + .055) / 1.055) ** 2.4).reduce((sum, x, i) => sum + x * [.2126, .7152, .0722][i], 0);
 const contrast = (a, b) => (Math.max(luminance(a), luminance(b)) + .05) / (Math.min(luminance(a), luminance(b)) + .05);
-const light = { '--bg': '#f8f9f6', '--surface': '#ffffff', '--surface-strong': '#edf2f5', '--text': '#171a19', '--text-strong': '#171a19', '--muted': '#596359', '--line': '#c4ccc2', '--accent': '#244ce5', '--accent-soft': 'rgba(47, 109, 134, 0.11)', '--quote-text': '#314049' };
+const light = { '--bg': '#f8f9f6', '--surface': '#ffffff', '--surface-strong': '#edf2f5', '--text': '#171a19', '--text-strong': '#171a19', '--muted': '#596359', '--line': '#c4ccc2', '--accent': '#244ce5', '--accent-soft': 'rgba(47, 109, 134, .11)', '--quote-text': '#314049' };
 
 async function checkTextContrast(page, label) {
   const samples = await page.evaluate(() => {
@@ -38,6 +38,14 @@ export async function verifyThemes(browser, origin) {
         await checkTextContrast(page, `${route}/${width}/${system}`);
         const themeIcon = await page.locator('.theme-toggle').evaluate(el => ({ color: getComputedStyle(el).color, bg: getComputedStyle(document.body).backgroundColor }));
         assert.ok(contrast(themeIcon.color, themeIcon.bg) >= 3, 'Theme control contrast');
+        const navLink = page.getByRole('navigation', { name: 'Primary' }).getByRole('link').first();
+        await navLink.hover();
+        assert.equal(await navLink.evaluate(el => getComputedStyle(el).color), 'rgb(142, 175, 255)', 'Navigation hover keeps the accent');
+        await page.locator('.brand').focus();
+        await page.keyboard.press('Tab');
+        const linkFocus = await navLink.evaluate(el => ({ color: getComputedStyle(el).outlineColor, bg: getComputedStyle(document.body).backgroundColor, style: getComputedStyle(el).outlineStyle }));
+        assert.equal(linkFocus.style, 'solid');
+        assert.ok(contrast(linkFocus.color, linkFocus.bg) >= 3, 'Link keyboard focus contrast');
         if (route === '/blog/pragma-unroll/') {
           assert.ok(await page.locator('table').count() > 0);
           const button = page.locator('.code-shell > button').first();
@@ -71,8 +79,10 @@ export async function verifyThemes(browser, origin) {
       if (system === 'dark') {
         assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
         await page.emulateMedia({ colorScheme: 'light' });
+        await page.waitForFunction(() => !document.documentElement.hasAttribute('data-theme'));
         assert.equal(await page.locator('html').getAttribute('data-theme'), null);
         await page.emulateMedia({ colorScheme: 'dark' });
+        await page.waitForFunction(() => getComputedStyle(document.body).backgroundColor === 'rgb(21, 22, 25)');
         assert.equal(await page.locator('body').evaluate(el => getComputedStyle(el).backgroundColor), 'rgb(21, 22, 25)');
       }
       await context.close();
