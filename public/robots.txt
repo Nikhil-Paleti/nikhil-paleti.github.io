@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nikhilpaleti.dev/sitemap-index.xml
+Sitemap: https://nikhilpaleti.com/sitemap-index.xml

@@ -2,7 +2,7 @@ export const site = {
   title: "Nikhil Paleti",
   description:
     "A technical blog and personal site about machine learning systems, optimization, and research engineering.",
-  url: "https://nikhilpaleti.dev",
+  url: "https://nikhilpaleti.com",
   author: "Nikhil Chowdary Paleti",
   role: "ML systems engineer and researcher",
   location: "Sunnyvale, California",

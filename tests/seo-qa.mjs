@@ -4,7 +4,7 @@ import path from "node:path";
 
 // Inspect production artifacts without a server, browser, or network access.
 const root = path.resolve("dist");
-const origin = "https://nikhilpaleti.dev";
+const origin = "https://nikhilpaleti.com";
 const decode = (text) => text.replace(/&(#x[\da-f]+|#\d+|amp|quot|apos|lt|gt);/gi, (_, entity) => {
   if (entity.startsWith("#")) return String.fromCodePoint(parseInt(entity.slice(entity[1].toLowerCase() === "x" ? 2 : 1), entity[1].toLowerCase() === "x" ? 16 : 10));
   return { amp: "&", quot: '"', apos: "'", lt: "<", gt: ">" }[entity.toLowerCase()];
@@ -139,5 +139,5 @@ for (const [route, destination] of [
   assert.ok(refresh, `Preserve redirect ${route}`);
   assert.equal(new URL(refresh.split(/url=/i)[1].trim(), origin).href, destination);
 }
-assert.match(await readFile(path.join(root, "robots.txt"), "utf8"), /Sitemap: https:\/\/nikhilpaleti\.dev\/sitemap-index\.xml/);
+assert.match(await readFile(path.join(root, "robots.txt"), "utf8"), /Sitemap: https:\/\/nikhilpaleti\.com\/sitemap-index\.xml/);
 console.log(`PASS sitemap: ${sitemapUrls.length} canonical indexable URLs; legacy redirects preserved`);
