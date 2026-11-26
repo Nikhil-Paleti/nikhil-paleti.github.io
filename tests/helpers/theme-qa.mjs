@@ -4,7 +4,7 @@ import katex from 'katex';
 const rgb = (value) => value.match(/[\d.]+/g).slice(0, 3).map(Number);
 const luminance = (value) => rgb(value).map(x => x / 255).map(x => x <= .04045 ? x / 12.92 : ((x + .055) / 1.055) ** 2.4).reduce((sum, x, i) => sum + x * [.2126, .7152, .0722][i], 0);
 const contrast = (a, b) => (Math.max(luminance(a), luminance(b)) + .05) / (Math.min(luminance(a), luminance(b)) + .05);
-const light = { '--bg': '#f8f9f6', '--surface': '#ffffff', '--surface-strong': '#edf2f5', '--text': '#171a19', '--text-strong': '#171a19', '--muted': '#596359', '--line': '#c4ccc2', '--accent': '#244ce5', '--accent-soft': 'rgba(47, 109, 134, .11)', '--quote-text': '#314049' };
+const light = { '--bg': '#f6f5f1', '--surface': '#eeece6', '--surface-strong': '#eeece6', '--text': '#16161a', '--text-strong': '#16161a', '--muted': '#5f5e58', '--line': '#d9d6cd', '--accent': '#b93d0b', '--accent-soft': '#f5e4d8', '--quote-text': '#16161a' };
 
 async function checkTextContrast(page, label) {
   const samples = await page.evaluate(() => {
@@ -33,14 +33,14 @@ export async function verifyThemes(browser, origin) {
       for (const route of ['/', '/about/', '/blog/', '/publications/', '/blog/pragma-unroll/']) {
         await page.goto(origin + route);
         await page.evaluate(() => document.fonts.ready);
-        assert.equal(await page.locator('body').evaluate(el => getComputedStyle(el).backgroundColor), 'rgb(21, 22, 25)');
+        assert.equal(await page.locator('body').evaluate(el => getComputedStyle(el).backgroundColor), 'rgb(17, 17, 19)');
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${route}/${width}: no page overflow`);
         await checkTextContrast(page, `${route}/${width}/${system}`);
         const themeIcon = await page.locator('.theme-toggle').evaluate(el => ({ color: getComputedStyle(el).color, bg: getComputedStyle(document.body).backgroundColor }));
         assert.ok(contrast(themeIcon.color, themeIcon.bg) >= 3, 'Theme control contrast');
         const navLink = page.getByRole('navigation', { name: 'Primary' }).getByRole('link').first();
         await navLink.hover();
-        assert.equal(await navLink.evaluate(el => getComputedStyle(el).color), 'rgb(142, 175, 255)', 'Navigation hover keeps the accent');
+        assert.equal(await navLink.evaluate(el => getComputedStyle(el).color), 'rgb(255, 138, 76)', 'Navigation hover keeps the accent');
         await page.locator('.brand').focus();
         await page.keyboard.press('Tab');
         const linkFocus = await navLink.evaluate(el => ({ color: getComputedStyle(el).outlineColor, bg: getComputedStyle(document.body).backgroundColor, style: getComputedStyle(el).outlineStyle }));
@@ -52,7 +52,7 @@ export async function verifyThemes(browser, origin) {
           const boundary = await button.evaluate(el => ({ border: getComputedStyle(el).borderColor, bg: getComputedStyle(el).backgroundColor }));
           assert.ok(contrast(boundary.border, boundary.bg) >= 3, 'Copy control boundary contrast');
           await button.hover();
-          assert.equal(await button.evaluate(el => getComputedStyle(el).borderColor), 'rgb(142, 175, 255)');
+          assert.equal(await button.evaluate(el => getComputedStyle(el).borderColor), 'rgb(255, 138, 76)');
           await page.locator('.code-shell pre').first().focus();
           await page.keyboard.press('Tab');
           assert.equal(await page.locator(':focus').getAttribute('data-copy-code'), 'true');
@@ -67,11 +67,11 @@ export async function verifyThemes(browser, origin) {
           await page.locator('[data-math-fixture]').screenshot({ path: `test-results/screenshots/dark-math-${width}-${system}.png` });
         }
       }
-      // Explicit light on dark OS and system light preserve the original values and syntax colors.
+      // Explicit light on dark OS and system light use the warm-paper palette and keep the existing syntax colors.
       await page.locator('[data-theme-toggle]').click();
       await page.reload();
       const values = await page.evaluate(keys => Object.fromEntries(keys.map(key => [key, getComputedStyle(document.documentElement).getPropertyValue(key).trim()])), Object.keys(light));
-      assert.deepEqual(values, light, `Preserve light palette on ${system} OS`);
+      assert.deepEqual(values, light, `Warm-paper light palette on ${system} OS`);
       assert.equal(await page.locator('.astro-code').first().evaluate(el => getComputedStyle(el).backgroundColor), 'rgb(36, 41, 46)');
       const colors = await page.locator('.astro-code span[style]').evaluateAll(els => [...new Set(els.map(el => getComputedStyle(el).color))].sort());
       assert.deepEqual(colors, ['rgb(106, 115, 125)', 'rgb(121, 184, 255)', 'rgb(179, 146, 240)', 'rgb(225, 228, 232)', 'rgb(249, 117, 131)'].sort(), 'Preserve all existing light code token colors');
@@ -82,8 +82,8 @@ export async function verifyThemes(browser, origin) {
         await page.waitForFunction(() => !document.documentElement.hasAttribute('data-theme'));
         assert.equal(await page.locator('html').getAttribute('data-theme'), null);
         await page.emulateMedia({ colorScheme: 'dark' });
-        await page.waitForFunction(() => getComputedStyle(document.body).backgroundColor === 'rgb(21, 22, 25)');
-        assert.equal(await page.locator('body').evaluate(el => getComputedStyle(el).backgroundColor), 'rgb(21, 22, 25)');
+        await page.waitForFunction(() => getComputedStyle(document.body).backgroundColor === 'rgb(17, 17, 19)');
+        assert.equal(await page.locator('body').evaluate(el => getComputedStyle(el).backgroundColor), 'rgb(17, 17, 19)');
       }
       await context.close();
     }

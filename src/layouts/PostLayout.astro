@@ -12,9 +12,10 @@ interface Props {
   headings?: { depth: number; slug: string; text: string }[];
   heroImage?: string;
   heroImageAlt?: string;
+  result?: { value: string; summary: string };
 }
 
-const { title, seoTitle, description, date, tags, headings = [], heroImage, heroImageAlt } = Astro.props;
+const { title, seoTitle, description, date, tags, headings = [], heroImage, heroImageAlt, result } = Astro.props;
 const postJsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -50,6 +51,12 @@ const postJsonLd = {
           </ul>
         )}
       </div>
+      {result && (
+        <p class="article-result">
+          <span class="result-label">Result</span>
+          <strong class="result-value">{result.value}</strong> {result.summary}
+        </p>
+      )}
     </div>
 
     <div class="article-layout">

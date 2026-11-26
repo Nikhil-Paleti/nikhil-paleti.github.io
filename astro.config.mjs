@@ -6,6 +6,7 @@ import rehypeKatex from "rehype-katex";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkMath from "remark-math";
+import rehypeBenchTables from "./src/lib/rehype-bench-tables.mjs";
 
 export default defineConfig({
   site: "https://nikhilpaleti.com",
@@ -24,6 +25,7 @@ export default defineConfig({
     },
     remarkPlugins: [remarkMath],
     rehypePlugins: [
+      rehypeBenchTables,
       rehypeKatex,
       rehypeSlug,
       [
