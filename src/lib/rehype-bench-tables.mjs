@@ -8,6 +8,18 @@ const walk = (node, fn) => {
   for (const child of node.children ?? []) walk(child, fn);
 };
 
+// Wrap every table in a horizontally scrollable box so a wide table never
+// widens the page on a phone.
+const wrapTables = (node) => {
+  (node.children ?? []).forEach((child, index) => {
+    if (child.type === "element" && child.tagName === "table") {
+      node.children[index] = { type: "element", tagName: "div", properties: { className: ["table-scroll"] }, children: [child] };
+    } else {
+      wrapTables(child);
+    }
+  });
+};
+
 const text = (node) =>
   node.type === "text" ? node.value : (node.children ?? []).map(text).join("");
 
@@ -77,5 +89,6 @@ export default function rehypeBenchTables() {
         });
       });
     });
+    wrapTables(tree);
   };
 }

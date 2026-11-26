@@ -482,7 +482,7 @@ h2 {
 .prose ul,
 .prose ol,
 .prose blockquote,
-.prose table,
+.prose .table-scroll,
 .prose pre,
 .prose .figure-grid,
 .prose .figure {
@@ -587,6 +587,15 @@ h2 {
 .prose td.mono {
   font-family: var(--font-mono);
   font-size: 0.875rem;
+}
+
+.prose .table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.prose .table-scroll > table {
+  margin: 0;
 }
 
 /* Benchmark tables: an inline bar in the Speedup column, best row highlighted. */
@@ -981,6 +990,27 @@ h2 {
 }
 
 @media (max-width: 720px) {
+  .prose th,
+  .prose td {
+    padding: 0.55rem 0.4rem;
+  }
+
+  .prose thead th {
+    letter-spacing: 0.04em;
+  }
+
+  .speedup {
+    gap: 0.45rem;
+  }
+
+  .speedup-value {
+    min-width: 2.9rem;
+  }
+
+  .speedup-bar {
+    min-width: 1.5rem;
+  }
+
   .section-heading,
   .project-header,
   .update-entry,
