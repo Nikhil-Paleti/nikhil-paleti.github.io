@@ -106,6 +106,7 @@ try {
       assert.equal(await page.locator(".article-result .result-value").innerText(), "3.9×");
       assert.equal(await page.locator("table .speedup-bar").count(), 10);
       assert.equal(await page.locator("table tr.is-best").count(), 2);
+      assert.ok((await page.locator("table thead th").nth(2).innerText()).includes("µs"), "Table headers keep their units (no uppercase µ → M)");
       assert.ok(await page.locator("h1").evaluate(el => !/serif/i.test(getComputedStyle(el).fontFamily.replace(/sans-serif/gi, ""))), "Post title uses the sans");
     }
     console.log(`PASS route ${route}`);
