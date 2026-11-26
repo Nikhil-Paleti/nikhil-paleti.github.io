@@ -573,10 +573,10 @@ h2 {
   border-bottom: 1px solid var(--text);
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  /* No uppercase here: it turns units like "µs" into "MS". */
+  letter-spacing: 0.02em;
 }
 
 .prose th.num,
@@ -993,10 +993,6 @@ h2 {
   .prose th,
   .prose td {
     padding: 0.55rem 0.4rem;
-  }
-
-  .prose thead th {
-    letter-spacing: 0.04em;
   }
 
   .speedup {
