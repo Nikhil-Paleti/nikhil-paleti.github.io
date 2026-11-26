@@ -38,7 +38,8 @@ try {
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${width}/${colorScheme}: horizontal overflow`);
       assert.equal(await page.locator(".social-links a").count(), 5);
       assert.equal(await page.locator(".news-row").count(), 4);
-      assert.equal(await page.locator(".writing-row").count(), 3);
+      assert.equal(await page.locator(".writing-row").count(), 2);
+      assert.equal(await page.locator(".writing-row time").count(), 2, "Each writing row shows its date");
       await page.screenshot({ path: `test-results/screenshots/home-${width}-${colorScheme}.png`, fullPage: true });
 
       // Native disclosures support repeated mouse and keyboard interaction.
@@ -101,6 +102,11 @@ try {
       }));
       assert.ok(scrollableCode.length > 0);
       assert.ok(scrollableCode.every(block => block.overflowX === "auto" && block.scrolled), "Wide code remains horizontally scrollable");
+      // The headline number lives in the post header; benchmark tables draw inline speedup bars.
+      assert.equal(await page.locator(".article-result .result-value").innerText(), "3.9×");
+      assert.equal(await page.locator("table .speedup-bar").count(), 10);
+      assert.equal(await page.locator("table tr.is-best").count(), 2);
+      assert.ok(await page.locator("h1").evaluate(el => !/serif/i.test(getComputedStyle(el).fontFamily.replace(/sans-serif/gi, ""))), "Post title uses the sans");
     }
     console.log(`PASS route ${route}`);
   }

@@ -12,7 +12,14 @@ const blog = defineCollection({
       featured: z.boolean().default(false),
       archiveUrl: z.string().url().optional(),
       heroImage: image().optional(),
-      heroImageAlt: z.string().optional()
+      heroImageAlt: z.string().optional(),
+      // Headline number shown under the post header, e.g. { value: "3.9×", summary: "faster at …" }.
+      result: z
+        .object({
+          value: z.string(),
+          summary: z.string()
+        })
+        .optional()
     })
 });
 
