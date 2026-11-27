@@ -1,35 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Nikhil Paleti site card">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0f171c" />
-      <stop offset="100%" stop-color="#18242c" />
-    </linearGradient>
-  </defs>
-  <rect width="1200" height="630" fill="url(#bg)" />
-  <rect x="84" y="84" width="1032" height="462" rx="30" fill="none" stroke="#74b6cf" stroke-opacity="0.32" />
-  <path
-    d="M148 450V176h58l123 194V176h44v274h-56L190 257.5V450Z"
-    fill="#f4efe6"
-  />
-  <text
-    x="430"
-    y="286"
-    fill="#f4efe6"
-    font-size="76"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-weight="700"
-  >
-    Nikhil Paleti
-  </text>
-  <text
-    x="430"
-    y="356"
-    fill="#9eb0ba"
-    font-size="28"
-    font-family="'SFMono-Regular', Consolas, 'Liberation Mono', monospace"
-    letter-spacing="2"
-  >
-    <tspan x="430">MACHINE LEARNING SYSTEMS</tspan>
-    <tspan x="430" dy="46">GPU PERFORMANCE</tspan>
-  </text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f6f5f1"/>
+  <text x="80" y="102" font-family="Inter, sans-serif" font-size="30" font-weight="600" fill="#16161a">NP / Nikhil Paleti</text>
+  <text x="1120" y="102" font-family="'JetBrains Mono', monospace" font-size="22" fill="#5f5e58" text-anchor="end">nikhilpaleti.com</text>
+  <rect x="80" y="130" width="1040" height="2" fill="#16161a"/>
+  
+  <text x="80" y="300" font-family="Inter, sans-serif" font-size="104" font-weight="700" letter-spacing="-3" fill="#16161a">Nikhil Paleti</text>
+  <text x="80" y="370" font-family="Inter, sans-serif" font-size="38" fill="#5f5e58">ML systems engineer and researcher</text>
+  <rect x="80" y="498" width="1040" height="1" fill="#d9d6cd"/>
+  <text x="80" y="550" font-family="'JetBrains Mono', monospace" font-size="22" letter-spacing="1.5" fill="#5f5e58">MACHINE LEARNING SYSTEMS / GPU PERFORMANCE</text>
 </svg>
