@@ -1,3 +1,29 @@
+/* Fonts are served from this site, so every screen gets the same files.
+   Google Fonts sends Windows a different Inter build and leaves out arrows,
+   which made text render differently from machine to machine. */
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/InterVariable-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-arrows.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+2190-2199;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/JetBrainsMono-latin.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light;
   /* "Profiler report" palette: warm paper, ink, and one heat accent reserved for results. */
@@ -34,7 +60,6 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
-  font-feature-settings: "cv11", "ss03";
   line-height: 1.7;
 }
 

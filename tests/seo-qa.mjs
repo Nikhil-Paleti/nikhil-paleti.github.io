@@ -69,7 +69,8 @@ for (const file of (await readdir(root, { recursive: true })).filter((file) => f
   assert.equal(meta(html, "og:title"), pageTitle);
   assert.equal(meta(html, "twitter:title"), pageTitle);
   const stylesheets = tags(html, "link").filter((tag) => tag.rel === "stylesheet");
-  assert.ok(stylesheets.some((tag) => tag.href?.startsWith("https://fonts.googleapis.com/css2?")), `${route}: discover fonts directly from HTML`);
+  assert.ok(tags(html, "link").some((tag) => tag.rel === "preload" && tag.as === "font" && tag.href === "/fonts/InterVariable-latin.woff2"), `${route}: preload the self-hosted Inter font`);
+  assert.ok(!/fonts\.(googleapis|gstatic)\.com/.test(html), `${route}: fonts are self-hosted, not loaded from Google`);
   const css = (await Promise.all(stylesheets.filter((tag) => tag.href?.startsWith("/")).map((tag) => readFile(localFile(new URL(tag.href, origin)), "utf8")))).join("\n");
   assert.ok(!/@import[^;]*fonts\.googleapis\.com/.test(css), `${route}: no chained font import`);
   if (route === "/") assert.ok(!/\.katex-mathml\b/.test(css), "Homepage must not load article math CSS");
