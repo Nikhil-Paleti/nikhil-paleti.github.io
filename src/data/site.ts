@@ -9,7 +9,7 @@ export const site = {
   email: "nikhilpaleti23@gmail.com",
   ogImage: "/og-card.png",
   ogImageAlt:
-    "Nikhil Paleti personal website card with an N monogram and machine learning systems and GPU performance subtitle.",
+    "Nikhil Paleti, ML systems engineer and researcher: machine learning systems and GPU performance.",
   twitterHandle: "@nikhil2362",
   social: {
     github: "https://github.com/Nikhil-Paleti",
