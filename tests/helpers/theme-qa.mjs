@@ -49,16 +49,18 @@ export async function verifyThemes(browser, origin) {
         if (route === '/blog/pragma-unroll/') {
           assert.ok(await page.locator('table').count() > 0);
           const button = page.locator('.code-shell > button').first();
-          const boundary = await button.evaluate(el => ({ border: getComputedStyle(el).borderColor, bg: getComputedStyle(el).backgroundColor }));
-          assert.ok(contrast(boundary.border, boundary.bg) >= 3, 'Copy control boundary contrast');
+          const codeBg = await page.locator('.code-shell pre').first().evaluate(el => getComputedStyle(el).backgroundColor);
+          assert.ok(contrast(await button.evaluate(el => getComputedStyle(el).color), codeBg) >= 4.5, 'Copy label contrast');
+          const [buttonBox, firstLine] = await Promise.all([button.boundingBox(), page.locator('.code-shell pre code').first().boundingBox()]);
+          assert.ok(buttonBox.y + buttonBox.height <= firstLine.y + 1, 'Copy sits above the code, not on it');
           await button.hover();
-          assert.equal(await button.evaluate(el => getComputedStyle(el).borderColor), 'rgb(255, 138, 76)');
+          assert.equal(await button.evaluate(el => getComputedStyle(el).textDecorationLine), 'underline', 'Copy hover underlines');
           await page.locator('.code-shell pre').first().focus();
           await page.keyboard.press('Tab');
           assert.equal(await page.locator(':focus').getAttribute('data-copy-code'), 'true');
-          const focus = await button.evaluate(el => ({ outline: getComputedStyle(el).outlineColor, bg: getComputedStyle(el).backgroundColor, style: getComputedStyle(el).outlineStyle }));
+          const focus = await button.evaluate(el => ({ outline: getComputedStyle(el).outlineColor, style: getComputedStyle(el).outlineStyle }));
           assert.equal(focus.style, 'solid');
-          assert.ok(contrast(focus.outline, focus.bg) >= 3, 'Keyboard focus contrast');
+          assert.ok(contrast(focus.outline, codeBg) >= 3, 'Keyboard focus contrast');
           await page.screenshot({ path: `test-results/screenshots/dark-code-focus-${width}-${system}.png` });
           await page.locator('table').first().screenshot({ path: `test-results/screenshots/dark-table-${width}-${system}.png` });
           // A QA-only fixture checks retained KaTeX support without publishing invented content.
@@ -67,14 +69,16 @@ export async function verifyThemes(browser, origin) {
           await page.locator('[data-math-fixture]').screenshot({ path: `test-results/screenshots/dark-math-${width}-${system}.png` });
         }
       }
-      // Explicit light on dark OS and system light use the warm-paper palette and keep the existing syntax colors.
+      // Explicit light on dark OS and system light use the warm-paper palette with readable syntax colours.
       await page.locator('[data-theme-toggle]').click();
       await page.reload();
       const values = await page.evaluate(keys => Object.fromEntries(keys.map(key => [key, getComputedStyle(document.documentElement).getPropertyValue(key).trim()])), Object.keys(light));
       assert.deepEqual(values, light, `Warm-paper light palette on ${system} OS`);
-      assert.equal(await page.locator('.astro-code').first().evaluate(el => getComputedStyle(el).backgroundColor), 'rgb(36, 41, 46)');
-      const colors = await page.locator('.astro-code span[style]').evaluateAll(els => [...new Set(els.map(el => getComputedStyle(el).color))].sort());
-      assert.deepEqual(colors, ['rgb(106, 115, 125)', 'rgb(121, 184, 255)', 'rgb(179, 146, 240)', 'rgb(225, 228, 232)', 'rgb(249, 117, 131)'].sort(), 'Preserve all existing light code token colors');
+      const lightCodeBg = await page.locator('.astro-code').first().evaluate(el => getComputedStyle(el).backgroundColor);
+      assert.equal(lightCodeBg, 'rgb(246, 245, 241)', 'Light code sits on the page paper');
+      const colors = await page.locator('.astro-code span[style]').evaluateAll(els => [...new Set(els.map(el => getComputedStyle(el).color))]);
+      assert.ok(colors.length >= 4, 'Light code keeps syntax colours');
+      assert.deepEqual(colors.filter(c => contrast(c, lightCodeBg) < 4.5), [], 'Every light syntax colour meets 4.5:1');
       // A system change must retain an intentional light override until reset.
       if (system === 'dark') {
         assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');

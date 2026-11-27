@@ -19,8 +19,8 @@ export default defineConfig({
   ],
   markdown: {
     shikiConfig: {
-      // Preserve the existing light-mode code appearance; improve dark-mode contrast.
-      themes: { light: "github-dark", dark: "github-dark-high-contrast" },
+      // Light code sits on the paper surface; dark keeps high contrast.
+      themes: { light: "github-light-high-contrast", dark: "github-dark-high-contrast" },
       defaultColor: "light"
     },
     remarkPlugins: [remarkMath],
