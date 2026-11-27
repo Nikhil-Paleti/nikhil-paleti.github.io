@@ -20,7 +20,7 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       // Light code sits on the paper surface; dark keeps high contrast.
-      themes: { light: "github-light", dark: "github-dark-high-contrast" },
+      themes: { light: "github-light-high-contrast", dark: "github-dark-high-contrast" },
       defaultColor: "light"
     },
     remarkPlugins: [remarkMath],

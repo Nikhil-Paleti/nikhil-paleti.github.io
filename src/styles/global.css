@@ -946,7 +946,9 @@ h2 {
 }
 
 /* Dark-only finishing rules. Light mode keeps its existing palette and code colors. */
-.astro-code { background-color: var(--surface) !important; }
+/* Light code sits on the page paper so every syntax colour, comments included, clears 4.5:1. */
+.astro-code { background-color: var(--bg) !important; }
+:root[data-theme="dark"] .astro-code { background-color: var(--surface) !important; }
 :root[data-theme="dark"] .astro-code,
 :root[data-theme="dark"] .astro-code span { color: var(--shiki-dark) !important; }
 :root[data-theme="dark"] .figure img,
@@ -955,7 +957,9 @@ h2 {
 :root[data-theme="dark"] .sidebar-theme-toggle:hover { border-color: rgba(232, 225, 212, 0.18); }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .astro-code { background-color: var(--surface) !important; }
+  :root:not([data-theme="light"]) /* Light code sits on the page paper so every syntax colour, comments included, clears 4.5:1. */
+.astro-code { background-color: var(--bg) !important; }
+:root[data-theme="dark"] .astro-code { background-color: var(--surface) !important; }
   :root:not([data-theme="light"]) .astro-code,
   :root:not([data-theme="light"]) .astro-code span { color: var(--shiki-dark) !important; }
 }
